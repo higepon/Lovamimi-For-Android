@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.androidhive.jsonparsing.JSONParser;
@@ -20,8 +21,11 @@ public class MainActivity extends Activity {
 
 	@Override
 	protected void onStart() {
-		// TODO Auto-generated method stub
 		super.onStart();
+		getSecrets();		
+	}
+
+	private void getSecrets() {
 		AsyncTask<String, Void, List<Secret>> fetchTimeline = new AsyncTask<String, Void, List<Secret>>() {
 
 			@Override
@@ -29,6 +33,7 @@ public class MainActivity extends Activity {
 				// TODO Auto-generated method stub
 				super.onPostExecute(secrets);
 				EditText timelintText = (EditText) findViewById(R.id.timeline_text);
+				timelintText.setText("");
 				for (Secret secret: secrets) {
 					timelintText.setText(timelintText.getText().toString() + "\n" + secret.body);
 				}
@@ -54,7 +59,7 @@ public class MainActivity extends Activity {
 				}
 				return null;
 			}
-		}.execute("test");		
+		}.execute("test");
 	}
 
 	private static final String TAG = "Lovamimi Client";
@@ -64,6 +69,17 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 	
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.action_refresh:
+			getSecrets();
+			return true;
+		default:
+			return false;
+		}
 	}
 
 	@Override
