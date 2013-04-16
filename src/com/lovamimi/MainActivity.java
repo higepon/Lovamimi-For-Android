@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.androidhive.jsonparsing.JSONParser;
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
@@ -41,12 +42,16 @@ public class MainActivity extends Activity {
 			@Override
 			protected void onPostExecute(List<Secret> secrets) {
 				super.onPostExecute(secrets);
+/*				
 				EditText timelintText = (EditText) findViewById(R.id.timeline_text);
 				timelintText.setText("");
 				for (Secret secret : secrets) {
 					timelintText.setText(timelintText.getText().toString()
 							+ "\n" + secret.body);
 				}
+*/				
+				TextView secrectBody = (TextView) findViewById(R.id.secret_body);
+				secrectBody.setText(secrets.get(0).body);
 				progressDialog.dismiss();				
 			}
 
