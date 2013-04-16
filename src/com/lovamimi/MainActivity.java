@@ -17,15 +17,22 @@ import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.androidhive.jsonparsing.JSONParser;
+import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
 public class MainActivity extends Activity {
 
 	private ProgressDialog progressDialog;
+	private MixpanelAPI mixpanel;
 
 	@Override
 	protected void onStart() {
 		super.onStart();
+		track("Normal Secrets Loaded");
 		getSecrets();
+	}
+
+	private void track(String eventName) {
+		mixpanel.track("Android:" + eventName, null);
 	}
 
 	private void getSecrets() {
@@ -80,6 +87,7 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		mixpanel = MixpanelAPI.getInstance(this, "e516b8643dc2d4d9b1779d243b7db7e5");
 		setContentView(R.layout.activity_main);
 
 	}
@@ -93,6 +101,12 @@ public class MainActivity extends Activity {
 		default:
 			return false;
 		}
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		mixpanel.flush();
 	}
 
 	@Override
