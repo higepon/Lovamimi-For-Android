@@ -52,6 +52,9 @@ public class MainActivity extends Activity {
 */				
 				TextView secrectBody = (TextView) findViewById(R.id.secret_body);
 				secrectBody.setText(secrets.get(0).body);
+				TextView secretDatetime = (TextView) findViewById(R.id.secret_datetime);
+				secretDatetime.setText(secrets.get(0).datetime);
+				
 				progressDialog.dismiss();				
 			}
 
@@ -74,7 +77,7 @@ public class MainActivity extends Activity {
 					for (int i = 0; i < secrets.length(); i++) {
 						JSONObject secret = secrets.getJSONObject(i);
 						Log.d("", "secret=" + secret.getString("body"));
-						results.add(new Secret(secret.getString("body")));
+						results.add(new Secret(secret.getString("body"), secret.getString("datetime")));
 					}
 					return results;
 				} catch (JSONException e) {

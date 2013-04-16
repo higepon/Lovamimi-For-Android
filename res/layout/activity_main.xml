@@ -18,35 +18,40 @@
         android:inputType="textMultiLine" />
 
     <RelativeLayout
-        android:id="@+id/profile_iconf"
+        android:id="@+id/profile_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="16dp"
-        android:layout_toLeftOf="@+id/timeline_text" >
+        android:layout_marginTop="21dp" >
 
         <ImageView
             android:id="@+id/profile_image"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_alignLeft="@+id/timeline_text"
-            android:layout_alignTop="@+id/timeline_text"
-            android:layout_marginLeft="38dp"
-            android:layout_marginTop="37dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
             android:contentDescription="@string/profile_image"
             android:src="@drawable/ic_launcher" />
-    </RelativeLayout>
 
-    <TextView
-        android:id="@+id/secret_body"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/profile_iconf"
-        android:layout_alignLeft="@+id/timeline_text"
-        android:layout_alignTop="@+id/profile_iconf"
-        android:layout_marginTop="18dp"
-        android:textColor="#ff222222"
-        android:textIsSelectable="true"
-        android:textSize="@dimen/font_size_small" />
+        <TextView
+            android:id="@+id/secret_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:textColor="#ff222222"
+            android:textIsSelectable="true"
+            android:textSize="@dimen/font_size_small" />
+
+        <TextView
+            android:id="@+id/secret_datetime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:textColor="#ff222222"
+            android:textIsSelectable="true"
+            android:textSize="@dimen/font_size_small" />
+    </RelativeLayout>
 
 </RelativeLayout>
