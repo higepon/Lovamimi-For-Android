@@ -45,29 +45,38 @@ public class MainActivity extends Activity {
 			@Override
 			protected void onPostExecute(List<Secret> secrets) {
 				super.onPostExecute(secrets);
+				addSecretsToLayout(secrets);
+				progressDialog.dismiss();
+			}
 
+			private void addSecretsToLayout(List<Secret> secrets) {
 				LinearLayout mainLayout = (LinearLayout) findViewById(R.id.layout_main);
 				LayoutInflater inflater = (LayoutInflater) getApplicationContext()
 						.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 				for (Secret secret : secrets) {
-					RelativeLayout incLayout = (RelativeLayout) inflater.inflate(
-							R.layout.secret, null);
-					TextView tv = (TextView) incLayout
-							.findViewById(R.id.secret_body);
-					tv.setText(secret.body);
-					TextView secretDatetime = (TextView) incLayout
-							.findViewById(R.id.secret_datetime);
-					secretDatetime.setText(secret.datetime);
-					
-					TextView numComments = (TextView) incLayout
-							.findViewById(R.id.num_comments);
-					numComments.setText("コメント(" + String.valueOf(secret.numComments) + ")");
-					TextView numLikes = (TextView) incLayout
-							.findViewById(R.id.num_likes);
-					numLikes.setText("いいね(" + String.valueOf(secret.numLikes) + ")");					
-					mainLayout.addView(incLayout);
+					addOneSecretToLayout(mainLayout, inflater, secret);
 				}
-				progressDialog.dismiss();
+			}
+
+			private void addOneSecretToLayout(LinearLayout mainLayout,
+					LayoutInflater inflater, Secret secret) {
+				RelativeLayout incLayout = (RelativeLayout) inflater.inflate(
+						R.layout.secret, null);
+				TextView tv = (TextView) incLayout
+						.findViewById(R.id.secret_body);
+				tv.setText(secret.body);
+				TextView secretDatetime = (TextView) incLayout
+						.findViewById(R.id.secret_datetime);
+				secretDatetime.setText(secret.datetime);
+
+				TextView numComments = (TextView) incLayout
+						.findViewById(R.id.num_comments);
+				numComments.setText("コメント("
+						+ String.valueOf(secret.numComments) + ")");
+				TextView numLikes = (TextView) incLayout
+						.findViewById(R.id.num_likes);
+				numLikes.setText("いいね(" + String.valueOf(secret.numLikes) + ")");
+				mainLayout.addView(incLayout);
 			}
 
 			@Override
@@ -89,11 +98,10 @@ public class MainActivity extends Activity {
 					for (int i = 0; i < secrets.length(); i++) {
 						JSONObject secret = secrets.getJSONObject(i);
 						Log.d("", "secret=" + secret.getString("body"));
-						results.add(new Secret(secret.getString("body"),
-								secret.getString("datetime"),
-								secret.getInt("num_comments"),
-								secret.getInt("num_likes")
-								));
+						results.add(new Secret(secret.getString("body"), secret
+								.getString("datetime"), secret
+								.getInt("num_comments"), secret
+								.getInt("num_likes")));
 					}
 					return results;
 				} catch (JSONException e) {
