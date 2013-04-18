@@ -62,6 +62,9 @@ public class MainActivity extends Activity {
 					TextView numComments = (TextView) incLayout
 							.findViewById(R.id.num_comments);
 					numComments.setText("コメント(" + String.valueOf(secret.numComments) + ")");
+					TextView numLikes = (TextView) incLayout
+							.findViewById(R.id.num_likes);
+					numLikes.setText("いいね(" + String.valueOf(secret.numLikes) + ")");					
 					mainLayout.addView(incLayout);
 				}
 				progressDialog.dismiss();
