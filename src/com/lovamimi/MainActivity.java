@@ -58,6 +58,10 @@ public class MainActivity extends Activity {
 					TextView secretDatetime = (TextView) incLayout
 							.findViewById(R.id.secret_datetime);
 					secretDatetime.setText(secret.datetime);
+					
+					TextView numComments = (TextView) incLayout
+							.findViewById(R.id.num_comments);
+					numComments.setText("コメント(" + String.valueOf(secret.numComments) + ")");
 					mainLayout.addView(incLayout);
 				}
 				progressDialog.dismiss();
@@ -82,8 +86,11 @@ public class MainActivity extends Activity {
 					for (int i = 0; i < secrets.length(); i++) {
 						JSONObject secret = secrets.getJSONObject(i);
 						Log.d("", "secret=" + secret.getString("body"));
-						results.add(new Secret(secret.getString("body"), secret
-								.getString("datetime")));
+						results.add(new Secret(secret.getString("body"),
+								secret.getString("datetime"),
+								secret.getInt("num_comments"),
+								secret.getInt("num_likes")
+								));
 					}
 					return results;
 				} catch (JSONException e) {
