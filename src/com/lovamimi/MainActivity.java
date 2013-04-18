@@ -9,12 +9,15 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.androidhive.jsonparsing.JSONParser;
@@ -42,20 +45,22 @@ public class MainActivity extends Activity {
 			@Override
 			protected void onPostExecute(List<Secret> secrets) {
 				super.onPostExecute(secrets);
-/*				
-				EditText timelintText = (EditText) findViewById(R.id.timeline_text);
-				timelintText.setText("");
+
+				LinearLayout mainLayout = (LinearLayout) findViewById(R.id.layout_main);
+				LayoutInflater inflater = (LayoutInflater) getApplicationContext()
+						.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 				for (Secret secret : secrets) {
-					timelintText.setText(timelintText.getText().toString()
-							+ "\n" + secret.body);
+					RelativeLayout incLayout = (RelativeLayout) inflater.inflate(
+							R.layout.secret, null);
+					TextView tv = (TextView) incLayout
+							.findViewById(R.id.secret_body);
+					tv.setText(secret.body);
+					TextView secretDatetime = (TextView) incLayout
+							.findViewById(R.id.secret_datetime);
+					secretDatetime.setText(secret.datetime);
+					mainLayout.addView(incLayout);
 				}
-*/				
-				TextView secrectBody = (TextView) findViewById(R.id.secret_body);
-				secrectBody.setText(secrets.get(0).body);
-				TextView secretDatetime = (TextView) findViewById(R.id.secret_datetime);
-				secretDatetime.setText(secrets.get(0).datetime);
-				
-				progressDialog.dismiss();				
+				progressDialog.dismiss();
 			}
 
 			@Override
@@ -77,7 +82,8 @@ public class MainActivity extends Activity {
 					for (int i = 0; i < secrets.length(); i++) {
 						JSONObject secret = secrets.getJSONObject(i);
 						Log.d("", "secret=" + secret.getString("body"));
-						results.add(new Secret(secret.getString("body"), secret.getString("datetime")));
+						results.add(new Secret(secret.getString("body"), secret
+								.getString("datetime")));
 					}
 					return results;
 				} catch (JSONException e) {
@@ -95,9 +101,9 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		mixpanel = MixpanelAPI.getInstance(this, "e516b8643dc2d4d9b1779d243b7db7e5");
+		mixpanel = MixpanelAPI.getInstance(this,
+				"e516b8643dc2d4d9b1779d243b7db7e5");
 		setContentView(R.layout.activity_main);
-
 	}
 
 	@Override
