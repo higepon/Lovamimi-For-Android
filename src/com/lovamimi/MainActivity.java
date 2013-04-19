@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -38,7 +39,7 @@ public class MainActivity extends Activity {
 	private void track(String eventName) {
 		mixpanel.track("Android:" + eventName, null);
 	}
-
+	
 	private void getSecrets() {
 		AsyncTask<String, Void, List<Secret>> fetchTimeline = new AsyncTask<String, Void, List<Secret>>() {
 
@@ -76,6 +77,10 @@ public class MainActivity extends Activity {
 				TextView numLikes = (TextView) incLayout
 						.findViewById(R.id.num_likes);
 				numLikes.setText("いいね(" + String.valueOf(secret.numLikes) + ")");
+				
+				ImageView icon = (ImageView) incLayout
+						.findViewById(R.id.profile_image);
+				icon.setImageResource(secret.getIconResource());
 				mainLayout.addView(incLayout);
 			}
 
@@ -98,10 +103,12 @@ public class MainActivity extends Activity {
 					for (int i = 0; i < secrets.length(); i++) {
 						JSONObject secret = secrets.getJSONObject(i);
 						Log.d("", "secret=" + secret.getString("body"));
-						results.add(new Secret(secret.getString("body"), secret
-								.getString("datetime"), secret
-								.getInt("num_comments"), secret
-								.getInt("num_likes")));
+						results.add(new Secret(
+								secret.getString("body"),
+								secret.getString("datetime"),
+								secret.getString("icon"),
+								secret.getInt("num_comments"),
+								secret.getInt("num_likes")));
 					}
 					return results;
 				} catch (JSONException e) {
