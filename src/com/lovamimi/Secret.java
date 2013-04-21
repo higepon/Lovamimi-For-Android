@@ -15,7 +15,7 @@ public class Secret {
 		this.numComments = numComments;
 		this.numLikes = numLikes;
 	}
-	
+	 
 	public int getIconResource() {
 		if (iconName == "0.jpg") {
 			return R.drawable.lovamimi_0;

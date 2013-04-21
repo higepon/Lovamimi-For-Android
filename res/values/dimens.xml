@@ -4,5 +4,12 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="font_size_small">12sp</dimen>
-
+    <dimen name="font_size_extra_small">10sp</dimen>    
+    <dimen name="default_margin">5dp</dimen>
+    <dimen name="default_padding">5dp</dimen>    
+    <color name="background_color">#FFDDDDDD</color>
+    <color name="secret_background_color">#FFFFFFFF</color>
+	<color name="comment_background_color">#FFEDEFF4</color>
+	<color name="clickable_color">#FF3B5998</color>
+	<color name="gray_color">#FF808080</color>
 </resources>
