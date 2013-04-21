@@ -75,6 +75,10 @@ public class MainActivity extends Activity {
 						.findViewById(R.id.num_comments);
 				numComments.setText("コメント("
 						+ String.valueOf(secret.numComments) + ")");
+				ImageView commentIcon = (ImageView) incLayout
+						.findViewById(R.id.comment_icon);
+				
+				commentIcon.setImageResource(secret.numComments > 0 ? R.drawable.comment : R.drawable.comment2);
 				TextView numLikes = (TextView) incLayout
 						.findViewById(R.id.num_likes);
 				numLikes.setText("いいね(" + String.valueOf(secret.numLikes) + ")");
