@@ -63,7 +63,7 @@ public class MainActivity extends Activity {
 			}
 
 			private void addOneSecretToLayout(LinearLayout mainLayout,
-					LayoutInflater inflater, Secret secret) {
+					LayoutInflater inflater, final Secret secret) {
 				RelativeLayout incLayout = (RelativeLayout) inflater.inflate(
 						R.layout.secret, null);
 				TextView tv = (TextView) incLayout
@@ -77,7 +77,9 @@ public class MainActivity extends Activity {
 					
 					@Override
 					public void onClick(View v) {
-						startActivity(new Intent(MainActivity.this, CommentActivity.class));
+						Intent intent = new Intent(MainActivity.this, CommentActivity.class);
+						intent.putExtra("secret", secret);
+						startActivity(intent);
 					}
 				};
 				

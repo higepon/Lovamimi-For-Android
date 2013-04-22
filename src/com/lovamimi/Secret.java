@@ -1,11 +1,23 @@
 package com.lovamimi;
 
-public class Secret {
+import java.io.Serializable;
+
+public class Secret implements Serializable {
+	private static final long serialVersionUID = 0x12345678L;
+	
 	String body;
 	String datetime;
 	String iconName;
 	int numComments;
 	int numLikes;
+	
+	@Override
+	public String toString() {
+		return "Secret [body=" + body + ", datetime=" + datetime
+				+ ", iconName=" + iconName + ", numComments=" + numComments
+				+ ", numLikes=" + numLikes + "]";
+	}
+
 	public Secret(String body, String datetime, String iconName,
 			int numComments, int numLikes) {
 		super();

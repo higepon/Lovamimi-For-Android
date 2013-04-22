@@ -1,7 +1,9 @@
 package com.lovamimi;
 
-import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 
 public class CommentActivity extends Activity {
@@ -10,6 +12,9 @@ public class CommentActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_comment);
+		Intent intent = getIntent();
+		Secret secret = (Secret) intent.getExtras().get("secret");
+		Log.d("debug", secret.toString());
 	}
 
 	@Override
