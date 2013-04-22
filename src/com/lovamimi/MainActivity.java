@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -76,7 +77,7 @@ public class MainActivity extends Activity {
 					
 					@Override
 					public void onClick(View v) {
-						Log.d("tap", "tap");
+						startActivity(new Intent(MainActivity.this, CommentActivity.class));
 					}
 				};
 				
