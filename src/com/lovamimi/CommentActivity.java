@@ -20,21 +20,11 @@ public class CommentActivity extends Activity {
 		Secret secret = (Secret) intent.getExtras().get("secret");
 		Log.d("debug", secret.toString());
 		ScrollView mainLayout = (ScrollView) findViewById(R.id.scroll);
-		RelativeLayout incLayout = (RelativeLayout) mainLayout.findViewById(R.id.secret);
+		RelativeLayout incLayout = (RelativeLayout) mainLayout.findViewById(R.id.secret_body_container);
 		TextView tv = (TextView) incLayout.findViewById(R.id.secret_body);
 		tv.setText(secret.body);
 		TextView secretDatetime = (TextView) incLayout.findViewById(R.id.secret_datetime);
 		secretDatetime.setText(secret.datetime);
-
-		TextView numComments = (TextView) incLayout.findViewById(R.id.num_comments);
-
-		numComments.setText("コメント(" + String.valueOf(secret.numComments) + ")");
-		ImageView commentIcon = (ImageView) incLayout.findViewById(R.id.comment_icon);
-
-		commentIcon.setImageResource(secret.numComments > 0 ? R.drawable.comment : R.drawable.comment2);
-
-		TextView numLikes = (TextView) incLayout.findViewById(R.id.num_likes);
-		numLikes.setText("いいね(" + String.valueOf(secret.numLikes) + ")");
 
 		ImageView icon = (ImageView) incLayout.findViewById(R.id.profile_image);
 		icon.setImageResource(secret.getIconResource());
