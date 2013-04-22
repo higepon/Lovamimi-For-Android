@@ -12,9 +12,10 @@
     <ScrollView
         android:id="@+id/scroll"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-        
-        <include layout="@layout/secret_body"/>
+        android:layout_height="match_parent"
+        android:background="@drawable/round_rectangle" >
+
+        <include layout="@layout/secret_body" />
     </ScrollView>
 
 </RelativeLayout>
