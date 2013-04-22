@@ -16,10 +16,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.androidhive.jsonparsing.JSONParser;
@@ -71,14 +72,24 @@ public class MainActivity extends Activity {
 						.findViewById(R.id.secret_datetime);
 				secretDatetime.setText(secret.datetime);
 
+				OnClickListener listener = new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						Log.d("tap", "tap");
+					}
+				};
+				
 				TextView numComments = (TextView) incLayout
 						.findViewById(R.id.num_comments);
+				numComments.setOnClickListener(listener);
 				numComments.setText("コメント("
 						+ String.valueOf(secret.numComments) + ")");
 				ImageView commentIcon = (ImageView) incLayout
 						.findViewById(R.id.comment_icon);
 				
 				commentIcon.setImageResource(secret.numComments > 0 ? R.drawable.comment : R.drawable.comment2);
+				commentIcon.setOnClickListener(listener);
 				TextView numLikes = (TextView) incLayout
 						.findViewById(R.id.num_likes);
 				numLikes.setText("いいね(" + String.valueOf(secret.numLikes) + ")");

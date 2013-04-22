@@ -17,4 +17,8 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
+    <style name="AppTheme.ActionBarStyle" parent="android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">#FD5200</item>
+    </style>
+
 </resources>
