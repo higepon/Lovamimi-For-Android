@@ -13,4 +13,5 @@
 	<color name="comment_background_color">#FFEDEFF4</color>
 	<color name="clickable_color">#FF3B5998</color>
 	<color name="gray_color">#FF808080</color>
+	<color name="border_color">#FFCCCCCC</color>
 </resources>
