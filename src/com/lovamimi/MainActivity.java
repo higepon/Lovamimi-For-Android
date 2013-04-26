@@ -108,18 +108,32 @@ public class MainActivity extends Activity {
 				ArrayList<Secret> results = new ArrayList<Secret>();
 				try {
 					JSONArray secrets = obj.getJSONArray("secrets");
-					for (int i = 0; i < secrets.length(); i++) {
-						JSONObject secret = secrets.getJSONObject(i);
-						Log.d("", "secret=" + secret.getString("body"));
-						results.add(new Secret(secret.getString("body"), secret.getString("datetime"), secret
-								.getString("icon"), secret.getInt("num_comments"), secret.getInt("num_likes")));
-					}
+					extractSecrets(results, secrets);
 					return results;
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				return null;
+			}
+
+			private void extractSecrets(ArrayList<Secret> results, JSONArray secrets) throws JSONException {
+				for (int i = 0; i < secrets.length(); i++) {
+					JSONObject secret = secrets.getJSONObject(i);
+					JSONArray commentsArray = secret.has("comments") ? secret.getJSONArray("comments") :null;
+					ArrayList<Secret> comments;
+					if (commentsArray == null) {
+						comments = new ArrayList<Secret>(0);
+					} else {
+						comments = new ArrayList<Secret>(commentsArray.length());
+						extractSecrets(comments, commentsArray);
+					}
+					Log.d("", "secret=" + secret.getString("body"));
+					Secret s = new Secret(secret.getString("body"), secret.getString("datetime"), secret
+							.getString("icon"), secret.getInt("num_comments"), secret.getInt("num_likes"));
+					s.comments = comments;
+					results.add(s);
+				}
 			}
 		};
 		fetchTimeline.execute("test");

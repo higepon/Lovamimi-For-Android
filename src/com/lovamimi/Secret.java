@@ -1,6 +1,7 @@
 package com.lovamimi;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Secret implements Serializable {
 	private static final long serialVersionUID = 0x12345678L;
@@ -10,6 +11,7 @@ public class Secret implements Serializable {
 	String iconName;
 	int numComments;
 	int numLikes;
+	List<Secret> comments;
 	
 	@Override
 	public String toString() {

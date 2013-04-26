@@ -28,6 +28,11 @@ public class CommentActivity extends Activity {
 
 		ImageView icon = (ImageView) incLayout.findViewById(R.id.profile_image);
 		icon.setImageResource(secret.getIconResource());
+		
+		ImageView commentIcon = (ImageView)findViewById(R.id.comment_header_container).findViewById(R.id.profile_image);
+		if (secret.comments.size() > 0) { 
+			commentIcon.setImageResource(secret.comments.get(0).getIconResource());
+		}
 	}
 
 	@Override
