@@ -1,5 +1,7 @@
 package com.lovamimi;
 
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -21,10 +23,12 @@ public class CommentActivity extends Activity {
 		Secret secret = (Secret) getIntent().getExtras().get("secret");
 		assert (secret != null);
 		setSecretToLayout(secret);
-
 		LinearLayout mainLayout = (LinearLayout) findViewById(R.id.main_container);
-		
-		for (Secret comment : secret.comments) {
+		setCommentsToLayout(mainLayout, secret.comments);
+	}
+
+	private void setCommentsToLayout(LinearLayout mainLayout, List<Secret> comments) {
+		for (Secret comment : comments) {
 			LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(
 					Context.LAYOUT_INFLATER_SERVICE);
 			RelativeLayout incLayout = (RelativeLayout) inflater.inflate(R.layout.comment, null);
@@ -36,8 +40,7 @@ public class CommentActivity extends Activity {
 			commentIcon.setImageResource(comment.getIconResource());
 			dateText.setText(comment.datetime);
 			commentBody.setText(comment.body);
-			numLikes.setText("いいね(" + String.valueOf(secret.numLikes) + ")");
-
+			numLikes.setText("いいね(" + String.valueOf(comment.numLikes) + ")");
 			mainLayout.addView(incLayout);
 		}
 	}
