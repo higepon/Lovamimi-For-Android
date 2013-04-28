@@ -88,8 +88,8 @@
                     android:id="@+id/comment_body"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/profile_image"
-                    android:layout_below="@+id/profile_image"
+                    android:layout_alignLeft="@+id/comment_header_container"
+                    android:layout_below="@+id/comment_header_container"
                     android:padding="@dimen/default_padding"
                     android:textColor="#ff222222"
                     android:textSize="@dimen/font_size_normal" />
