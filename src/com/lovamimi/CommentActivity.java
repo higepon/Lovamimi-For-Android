@@ -1,13 +1,13 @@
 package com.lovamimi;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 // scribe
@@ -19,28 +19,35 @@ public class CommentActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_comment);
 		Secret secret = (Secret) getIntent().getExtras().get("secret");
-		assert(secret != null);
+		assert (secret != null);
 		setSecretToLayout(secret);
+
+		LinearLayout mainLayout = (LinearLayout) findViewById(R.id.main_container);
 		
-		ImageView commentIcon = (ImageView)findViewById(R.id.comment_container).findViewById(R.id.profile_image);
-		TextView dateText = (TextView) findViewById(R.id.comment_container).findViewById(R.id.secret_datetime);
-		TextView commentBody = (TextView) findViewById(R.id.comment_body);
-		TextView numLikes = (TextView)findViewById(R.id.comment_container).findViewById(R.id.num_likes);		
-		if (secret.comments.size() > 0) { 
-			Secret comment = secret.comments.get(0);
+		for (Secret comment : secret.comments) {
+			LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(
+					Context.LAYOUT_INFLATER_SERVICE);
+			RelativeLayout incLayout = (RelativeLayout) inflater.inflate(R.layout.comment, null);
+			ImageView commentIcon = (ImageView) incLayout.findViewById(R.id.profile_image);
+			TextView dateText = (TextView) incLayout.findViewById(R.id.secret_datetime);
+			TextView commentBody = (TextView) incLayout.findViewById(R.id.comment_body);
+			TextView numLikes = (TextView) incLayout.findViewById(R.id.num_likes);
+
 			commentIcon.setImageResource(comment.getIconResource());
 			dateText.setText(comment.datetime);
 			commentBody.setText(comment.body);
-			numLikes.setText("いいね(" + String.valueOf(secret.numLikes) + ")");			
+			numLikes.setText("いいね(" + String.valueOf(secret.numLikes) + ")");
+
+			mainLayout.addView(incLayout);
 		}
 	}
 
 	private void setSecretToLayout(Secret secret) {
-		TextView tv = (TextView)findViewById(R.id.secret_body);
+		TextView tv = (TextView) findViewById(R.id.secret_body);
 		tv.setText(secret.body);
-		TextView secretDatetime = (TextView)findViewById(R.id.secret_datetime);
+		TextView secretDatetime = (TextView) findViewById(R.id.secret_datetime);
 		secretDatetime.setText(secret.datetime);
-		ImageView icon = (ImageView)findViewById(R.id.profile_image);
+		ImageView icon = (ImageView) findViewById(R.id.profile_image);
 		icon.setImageResource(secret.getIconResource());
 	}
 
