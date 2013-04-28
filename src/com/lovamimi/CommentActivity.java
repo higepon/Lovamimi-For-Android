@@ -30,8 +30,11 @@ public class CommentActivity extends Activity {
 		icon.setImageResource(secret.getIconResource());
 		
 		ImageView commentIcon = (ImageView)findViewById(R.id.comment_header_container).findViewById(R.id.profile_image);
+		TextView dateText = (TextView) findViewById(R.id.comment_header_container).findViewById(R.id.secret_datetime);		
 		if (secret.comments.size() > 0) { 
-			commentIcon.setImageResource(secret.comments.get(0).getIconResource());
+			Secret comment = secret.comments.get(0);
+			commentIcon.setImageResource(comment.getIconResource());
+			dateText.setText(comment.datetime);
 		}
 	}
 
