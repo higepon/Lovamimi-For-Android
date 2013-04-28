@@ -10,6 +10,8 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+// scribe
+// layout cleanup
 public class CommentActivity extends Activity {
 
 	@Override
@@ -30,11 +32,13 @@ public class CommentActivity extends Activity {
 		icon.setImageResource(secret.getIconResource());
 		
 		ImageView commentIcon = (ImageView)findViewById(R.id.comment_header_container).findViewById(R.id.profile_image);
-		TextView dateText = (TextView) findViewById(R.id.comment_header_container).findViewById(R.id.secret_datetime);		
+		TextView dateText = (TextView) findViewById(R.id.comment_header_container).findViewById(R.id.secret_datetime);
+		TextView commentBody = (TextView) findViewById(R.id.comment_body);
 		if (secret.comments.size() > 0) { 
 			Secret comment = secret.comments.get(0);
 			commentIcon.setImageResource(comment.getIconResource());
 			dateText.setText(comment.datetime);
+			commentBody.setText(comment.body);
 		}
 	}
 
