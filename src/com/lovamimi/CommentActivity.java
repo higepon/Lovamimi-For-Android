@@ -11,8 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-// scribe
-// layout cleanup
 // comment activity title
 // remove padding between comments.
 public class CommentActivity extends LovamimiActivity {
