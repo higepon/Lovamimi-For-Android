@@ -21,9 +21,13 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.androidhive.jsonparsing.JSONParser;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 
 public class MainActivity extends LovamimiActivity {
 
@@ -137,6 +141,15 @@ public class MainActivity extends LovamimiActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		PullToRefreshScrollView pullToRefreshView = (PullToRefreshScrollView) findViewById(R.id.scroll);
+		pullToRefreshView.setOnRefreshListener(new OnRefreshListener<ScrollView>() {
+		    @Override
+		    public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
+		        // Do work to refresh the list here.
+		    	Log.d("HH", "HHHHHHHHHHHHHHE");
+		    }
+		});
 	}
 
 	@Override
