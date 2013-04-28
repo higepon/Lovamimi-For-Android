@@ -6,5 +6,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="profile_image">Profile image</string>
     <string name="title_activity_comment">CommentActivity</string>
+    <string name="heart_plus">Heart Plus</string>
 
 </resources>
