@@ -31,14 +31,16 @@ public class CommentActivity extends Activity {
 		ImageView icon = (ImageView) incLayout.findViewById(R.id.profile_image);
 		icon.setImageResource(secret.getIconResource());
 		
-		ImageView commentIcon = (ImageView)findViewById(R.id.comment_header_container).findViewById(R.id.profile_image);
-		TextView dateText = (TextView) findViewById(R.id.comment_header_container).findViewById(R.id.secret_datetime);
+		ImageView commentIcon = (ImageView)findViewById(R.id.comment_container).findViewById(R.id.profile_image);
+		TextView dateText = (TextView) findViewById(R.id.comment_container).findViewById(R.id.secret_datetime);
 		TextView commentBody = (TextView) findViewById(R.id.comment_body);
+		TextView numLikes = (TextView)findViewById(R.id.comment_container).findViewById(R.id.num_likes);		
 		if (secret.comments.size() > 0) { 
 			Secret comment = secret.comments.get(0);
 			commentIcon.setImageResource(comment.getIconResource());
 			dateText.setText(comment.datetime);
 			commentBody.setText(comment.body);
+			numLikes.setText("いいね(" + String.valueOf(secret.numLikes) + ")");			
 		}
 	}
 
