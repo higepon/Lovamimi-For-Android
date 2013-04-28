@@ -2,7 +2,6 @@ package com.lovamimi;
 
 import java.util.List;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,10 +14,14 @@ import android.widget.TextView;
 // scribe
 // layout cleanup
 // comment activity title
-// padding on comment view
-// should not be round rect
 // remove padding between comments.
-public class CommentActivity extends Activity {
+public class CommentActivity extends LovamimiActivity {
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		track("Comment Loaded");
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

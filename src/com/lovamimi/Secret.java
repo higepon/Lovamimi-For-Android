@@ -5,23 +5,21 @@ import java.util.List;
 
 public class Secret implements Serializable {
 	private static final long serialVersionUID = 0x12345678L;
-	
+
 	String body;
 	String datetime;
 	String iconName;
 	int numComments;
 	int numLikes;
 	List<Secret> comments;
-	
+
 	@Override
 	public String toString() {
-		return "Secret [body=" + body + ", datetime=" + datetime
-				+ ", iconName=" + iconName + ", numComments=" + numComments
-				+ ", numLikes=" + numLikes + "]";
+		return "Secret [body=" + body + ", datetime=" + datetime + ", iconName=" + iconName + ", numComments="
+				+ numComments + ", numLikes=" + numLikes + "]";
 	}
 
-	public Secret(String body, String datetime, String iconName,
-			int numComments, int numLikes) {
+	public Secret(String body, String datetime, String iconName, int numComments, int numLikes) {
 		super();
 		this.body = body;
 		this.datetime = datetime;
@@ -29,7 +27,7 @@ public class Secret implements Serializable {
 		this.numComments = numComments;
 		this.numLikes = numLikes;
 	}
-	 
+
 	public int getIconResource() {
 		if (iconName == "0.jpg") {
 			return R.drawable.lovamimi_0;
