@@ -18,18 +18,9 @@ public class CommentActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_comment);
-		Intent intent = getIntent();
-		Secret secret = (Secret) intent.getExtras().get("secret");
-		Log.d("debug", secret.toString());
-		ScrollView mainLayout = (ScrollView) findViewById(R.id.scroll);
-		RelativeLayout incLayout = (RelativeLayout) mainLayout.findViewById(R.id.secret_body_container);
-		TextView tv = (TextView) incLayout.findViewById(R.id.secret_body);
-		tv.setText(secret.body);
-		TextView secretDatetime = (TextView) incLayout.findViewById(R.id.secret_datetime);
-		secretDatetime.setText(secret.datetime);
-
-		ImageView icon = (ImageView) incLayout.findViewById(R.id.profile_image);
-		icon.setImageResource(secret.getIconResource());
+		Secret secret = (Secret) getIntent().getExtras().get("secret");
+		assert(secret != null);
+		setSecretToLayout(secret);
 		
 		ImageView commentIcon = (ImageView)findViewById(R.id.comment_container).findViewById(R.id.profile_image);
 		TextView dateText = (TextView) findViewById(R.id.comment_container).findViewById(R.id.secret_datetime);
@@ -42,6 +33,15 @@ public class CommentActivity extends Activity {
 			commentBody.setText(comment.body);
 			numLikes.setText("いいね(" + String.valueOf(secret.numLikes) + ")");			
 		}
+	}
+
+	private void setSecretToLayout(Secret secret) {
+		TextView tv = (TextView)findViewById(R.id.secret_body);
+		tv.setText(secret.body);
+		TextView secretDatetime = (TextView)findViewById(R.id.secret_datetime);
+		secretDatetime.setText(secret.datetime);
+		ImageView icon = (ImageView)findViewById(R.id.profile_image);
+		icon.setImageResource(secret.getIconResource());
 	}
 
 	@Override
