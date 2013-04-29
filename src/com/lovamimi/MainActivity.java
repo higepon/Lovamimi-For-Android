@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -37,6 +38,7 @@ public class MainActivity extends LovamimiActivity {
 		super.onStart();
 		track("Normal Secrets Loaded");
 		getSecrets();
+		setProgressBarIndeterminateVisibility(Boolean.TRUE); 
 	}
 
 	private void getSecrets() {
@@ -46,7 +48,9 @@ public class MainActivity extends LovamimiActivity {
 			protected void onPostExecute(List<Secret> secrets) {
 				super.onPostExecute(secrets);
 				addSecretsToLayout(secrets);
-				progressDialog.dismiss();
+				PullToRefreshScrollView pullToRefreshView = (PullToRefreshScrollView) findViewById(R.id.scroll);				
+				pullToRefreshView.onRefreshComplete();
+				setProgressBarIndeterminateVisibility(Boolean.FALSE); 
 			}
 
 			private void addSecretsToLayout(List<Secret> secrets) {
@@ -92,7 +96,6 @@ public class MainActivity extends LovamimiActivity {
 
 			@Override
 			protected void onPreExecute() {
-				progressDialog = ProgressDialog.show(MainActivity.this, "Refresh", "Please wait...");
 				super.onPreExecute();
 			}
 
@@ -140,14 +143,13 @@ public class MainActivity extends LovamimiActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.activity_main);
-		
 		PullToRefreshScrollView pullToRefreshView = (PullToRefreshScrollView) findViewById(R.id.scroll);
 		pullToRefreshView.setOnRefreshListener(new OnRefreshListener<ScrollView>() {
 		    @Override
 		    public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
-		        // Do work to refresh the list here.
-		    	Log.d("HH", "HHHHHHHHHHHHHHE");
+		    	getSecrets();
 		    }
 		});
 	}
