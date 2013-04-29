@@ -1,7 +1,16 @@
 package com.lovamimi;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.util.Log;
+
+import com.androidhive.jsonparsing.JSONParser;
 
 public class Secret implements Serializable {
 	private static final long serialVersionUID = 0x12345678L;
@@ -53,6 +62,40 @@ public class Secret implements Serializable {
 			return R.drawable.lovamimi_9;
 		} else {
 			return R.drawable.lovamimi_0;
+		}
+	}
+	
+	public static List<Secret> getSecrets() {
+		JSONParser parser = new JSONParser();
+		JSONObject obj = parser.getJSONFromUrl("http://lovamimi.com/ja?json=1");
+		ArrayList<Secret> results = new ArrayList<Secret>();
+		try {
+			JSONArray secrets = obj.getJSONArray("secrets");
+			Secret.extractSecrets(results, secrets);
+			return results;
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;	
+	}
+
+	public static void extractSecrets(ArrayList<Secret> results, JSONArray secrets) throws JSONException {
+		for (int i = 0; i < secrets.length(); i++) {
+			JSONObject secret = secrets.getJSONObject(i);
+			JSONArray commentsArray = secret.has("comments") ? secret.getJSONArray("comments") : null;
+			ArrayList<Secret> comments;
+			if (commentsArray == null) {
+				comments = new ArrayList<Secret>(0);
+			} else {
+				comments = new ArrayList<Secret>(commentsArray.length());
+				extractSecrets(comments, commentsArray);
+			}
+			Log.d("", "secret=" + secret.getString("body"));
+			Secret s = new Secret(secret.getString("body"), secret.getString("datetime"), secret.getString("icon"),
+					secret.getInt("num_comments"), secret.getInt("num_likes"));
+			s.comments = comments;
+			results.add(s);
 		}
 	}
 }
