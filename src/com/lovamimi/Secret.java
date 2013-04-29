@@ -80,7 +80,7 @@ public class Secret implements Serializable {
 		return null;	
 	}
 
-	public static void extractSecrets(ArrayList<Secret> results, JSONArray secrets) throws JSONException {
+	private static void extractSecrets(ArrayList<Secret> results, JSONArray secrets) throws JSONException {
 		for (int i = 0; i < secrets.length(); i++) {
 			JSONObject secret = secrets.getJSONObject(i);
 			JSONArray commentsArray = secret.has("comments") ? secret.getJSONArray("comments") : null;
