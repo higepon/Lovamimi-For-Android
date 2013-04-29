@@ -32,13 +32,12 @@ import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 
 public class MainActivity extends LovamimiActivity {
 
-	private ProgressDialog progressDialog;
 	@Override
 	protected void onStart() {
 		super.onStart();
 		track("Normal Secrets Loaded");
 		getSecrets();
-		setProgressBarIndeterminateVisibility(Boolean.TRUE); 
+		setProgressBarIndeterminateVisibility(Boolean.TRUE);
 	}
 
 	private void getSecrets() {
@@ -48,9 +47,9 @@ public class MainActivity extends LovamimiActivity {
 			protected void onPostExecute(List<Secret> secrets) {
 				super.onPostExecute(secrets);
 				addSecretsToLayout(secrets);
-				PullToRefreshScrollView pullToRefreshView = (PullToRefreshScrollView) findViewById(R.id.scroll);				
+				PullToRefreshScrollView pullToRefreshView = (PullToRefreshScrollView) findViewById(R.id.scroll);
 				pullToRefreshView.onRefreshComplete();
-				setProgressBarIndeterminateVisibility(Boolean.FALSE); 
+				setProgressBarIndeterminateVisibility(Boolean.FALSE);
 			}
 
 			private void addSecretsToLayout(List<Secret> secrets) {
@@ -119,7 +118,7 @@ public class MainActivity extends LovamimiActivity {
 			private void extractSecrets(ArrayList<Secret> results, JSONArray secrets) throws JSONException {
 				for (int i = 0; i < secrets.length(); i++) {
 					JSONObject secret = secrets.getJSONObject(i);
-					JSONArray commentsArray = secret.has("comments") ? secret.getJSONArray("comments") :null;
+					JSONArray commentsArray = secret.has("comments") ? secret.getJSONArray("comments") : null;
 					ArrayList<Secret> comments;
 					if (commentsArray == null) {
 						comments = new ArrayList<Secret>(0);
@@ -128,8 +127,8 @@ public class MainActivity extends LovamimiActivity {
 						extractSecrets(comments, commentsArray);
 					}
 					Log.d("", "secret=" + secret.getString("body"));
-					Secret s = new Secret(secret.getString("body"), secret.getString("datetime"), secret
-							.getString("icon"), secret.getInt("num_comments"), secret.getInt("num_likes"));
+					Secret s = new Secret(secret.getString("body"), secret.getString("datetime"),
+							secret.getString("icon"), secret.getInt("num_comments"), secret.getInt("num_likes"));
 					s.comments = comments;
 					results.add(s);
 				}
@@ -147,10 +146,10 @@ public class MainActivity extends LovamimiActivity {
 		setContentView(R.layout.activity_main);
 		PullToRefreshScrollView pullToRefreshView = (PullToRefreshScrollView) findViewById(R.id.scroll);
 		pullToRefreshView.setOnRefreshListener(new OnRefreshListener<ScrollView>() {
-		    @Override
-		    public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
-		    	getSecrets();
-		    }
+			@Override
+			public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
+				getSecrets();
+			}
 		});
 	}
 
