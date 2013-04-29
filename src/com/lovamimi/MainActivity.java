@@ -8,7 +8,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -27,9 +26,6 @@ public class MainActivity extends LovamimiActivity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		track("Normal Secrets Loaded");
-		getSecrets();
-		setProgressBarIndeterminateVisibility(Boolean.TRUE);
 	}
 
 	private void addSecretsToLayout(List<Secret> secrets) {
@@ -110,17 +106,9 @@ public class MainActivity extends LovamimiActivity {
 				getSecrets();
 			}
 		});
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.action_refresh:
-			getSecrets();
-			return true;
-		default:
-			return false;
-		}
+		track("Normal Secrets Loaded");
+		getSecrets();
+		setProgressBarIndeterminateVisibility(Boolean.TRUE);		
 	}
 
 	@Override
