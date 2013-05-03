@@ -38,7 +38,7 @@ public class Secret implements Serializable {
 	}
 
 	public int getIconResource() {
-		if (iconName == "0.jpg") {
+		if (iconName.equals("0.jpg")) {
 			return R.drawable.lovamimi_0;
 		} else if (iconName.equals("1.jpg")) {
 			return R.drawable.lovamimi_1;

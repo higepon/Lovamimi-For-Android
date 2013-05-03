@@ -6,22 +6,28 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.View;
+import android.util.Log;
+import android.view.*;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.facebook.Session;
+import com.facebook.SessionState;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 
 public class MainActivity extends LovamimiActivity {
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
+	}
 
 	@Override
 	protected void onStart() {
@@ -108,7 +114,7 @@ public class MainActivity extends LovamimiActivity {
 		});
 		track("Normal Secrets Loaded");
 		getSecrets();
-		setProgressBarIndeterminateVisibility(Boolean.TRUE);		
+		setProgressBarIndeterminateVisibility(Boolean.TRUE);
 	}
 
 	@Override
@@ -118,4 +124,20 @@ public class MainActivity extends LovamimiActivity {
 		return true;
 	}
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_status_update) {
+            // start Facebook Login
+            Session.openActiveSession(this, true, new Session.StatusCallback() {
+
+                // callback when session changes state
+                @Override
+                public void call(Session session, SessionState state, Exception exception) {
+                    Log.d("hoge", "facebook callback!" + session.getAccessToken());
+                }
+            });
+            return true;
+        }
+        return false;
+    }
 }

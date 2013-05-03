@@ -7,5 +7,6 @@
     <string name="profile_image">Profile image</string>
     <string name="title_activity_comment">CommentActivity</string>
     <string name="heart_plus">Heart Plus</string>
+    <string name="app_id">131635960238479</string>
 
 </resources>
