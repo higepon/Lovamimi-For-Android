@@ -29,6 +29,7 @@
             android:name="com.lovamimi.CommentActivity"
             android:label="@string/app_name" >
         </activity>
+        <activity android:name=".PostSecret"/>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

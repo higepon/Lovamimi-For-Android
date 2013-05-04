@@ -130,6 +130,9 @@ public class MainActivity extends LovamimiActivity {
                 synchronized (MainActivity.this) {
                     sessionId = s;
                 }
+                Intent intent = new Intent(MainActivity.this, CommentActivity.class);
+//                intent.putExtra("secret", secrets.);
+                startActivity(intent);
             }
 
             @Override
