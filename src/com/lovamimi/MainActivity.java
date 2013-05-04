@@ -28,6 +28,8 @@ import java.util.List;
 
 public class MainActivity extends LovamimiActivity {
 
+    private String sessionId = null;
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -135,6 +137,9 @@ public class MainActivity extends LovamimiActivity {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);    //To change body of overridden methods use File | Settings | File Templates.
                 Log.d("hoge", "session=" + s);
+                synchronized(sessionId) {
+                    sessionId = s;
+                }
             }
 
             public String convertStreamToString(InputStream is) {
