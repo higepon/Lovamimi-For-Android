@@ -13,17 +13,7 @@ import com.facebook.SessionState;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 
-import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends LovamimiActivity {
@@ -131,113 +121,41 @@ public class MainActivity extends LovamimiActivity {
         return true;
     }
 
-    private void login(String sessionToken) {
+    private void lovamimiLogin(String fbSessionId) {
         new AsyncTask<String, Void, String>() {
             @Override
             protected void onPostExecute(String s) {
-                super.onPostExecute(s);    //To change body of overridden methods use File | Settings | File Templates.
+                super.onPostExecute(s);
                 Log.d("hoge", "session=" + s);
-                synchronized(sessionId) {
+                synchronized (MainActivity.this) {
                     sessionId = s;
                 }
             }
 
-            public String convertStreamToString(InputStream is) {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-                StringBuilder sb = new StringBuilder();
-
-                String line = null;
-                try {
-                    while ((line = reader.readLine()) != null) {
-                        sb.append(line + "\n");
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    try {
-                        is.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                return sb.toString();
-            }
-
             @Override
             protected String doInBackground(String... strings) {
-                HttpClient client = new DefaultHttpClient();
-                HttpPost post = new HttpPost("http://lovamimi.com/ja/login.scm");
-
-                List<NameValuePair> postlist = new ArrayList<NameValuePair>();
-                postlist.add(new BasicNameValuePair("type", "ios"));
-                postlist.add(new BasicNameValuePair("lang", "ja"));
-                postlist.add(new BasicNameValuePair("token", strings[0]));
-
-                try {
-                    post.setEntity(new UrlEncodedFormEntity(postlist));
-                } catch (UnsupportedEncodingException e) {
-                    throw new AssertionError("Encoding Error");
-                }
-
-                try {
-                    HttpResponse response = client.execute(post);
-                    Log.d("hige", response.getStatusLine().toString());
-
-                    HttpEntity entity = response.getEntity();
-                    if (entity != null) {
-// A Simple JSON Response Read
-                        InputStream instream = entity.getContent();
-                        String result = convertStreamToString(instream);
-
-
-                        instream.close();
-                        return result;
-                    }
-                    return "";
-                } catch (IOException e) {
-                    throw new AssertionError("IO Error");
-                }
+                String fbSessionId = strings[0];
+                return com.lovamimi.Session.login(fbSessionId);
             }
-        }.execute(sessionToken);
-
-/*
-    HERE();
-    NSURL* url = [NSURL URLWithString:@"http://lovamimi.com/ja/login.scm"];
-
-    NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-    NSString* device_token = [ud stringForKey:@"DEVICE_TOKEN"];
-
-    NSString* extraParam = device_token == nil ? @"" : [NSString stringWithFormat:@"&device_token=%@", device_token];
-
-    NSData *myRequestData = [[NSString stringWithFormat:@"type=ios&lang=ja&token=%@%@", session.accessToken, extraParam] dataUsingEncoding:NSUTF8StringEncoding];
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL: url];
-    [request setHTTPMethod: @"POST"];
-    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"content-type"];
-    [request setHTTPBody: myRequestData];
-
-    NSURLConnection *conn = [NSURLConnection connectionWithRequest:request delegate:self];
-    if (conn == nil) {
-        [self.delegate onLoginError:@"接続エラー"];
-        return;
-    }
-         */
+        }.execute(fbSessionId);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_status_update) {
-            // start Facebook Login
-            Session.openActiveSession(this, true, new Session.StatusCallback() {
-
-                // callback when session changes state
-                @Override
-                public void call(Session session, SessionState state, Exception exception) {
-                    Log.d("hoge", "facebook callback!" + session.getAccessToken());
-                    login(session.getAccessToken());
-                }
-            });
+            tryLogin();
             return true;
         }
         return false;
+    }
+
+    private void tryLogin() {
+        // Facebook login
+        Session.openActiveSession(this, true, new Session.StatusCallback() {
+            @Override
+            public void call(Session session, SessionState state, Exception exception) {
+                lovamimiLogin(session.getAccessToken());
+            }
+        });
     }
 }
