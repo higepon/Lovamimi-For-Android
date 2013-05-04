@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
-public class LovamimiActivity extends Activity {
+public class BaseActivity extends Activity {
 
     protected MixpanelAPI mixpanel;
 

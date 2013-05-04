@@ -12,7 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
-public class CommentActivity extends LovamimiActivity {
+public class CommentActivity extends BaseActivity {
 
 	@Override
 	protected void onStart() {

@@ -16,7 +16,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 
 import java.util.List;
 
-public class MainActivity extends LovamimiActivity {
+public class MainActivity extends BaseActivity {
 
     private String sessionId = null;
 
