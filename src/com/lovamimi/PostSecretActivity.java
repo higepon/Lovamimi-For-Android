@@ -1,13 +1,12 @@
 package com.lovamimi;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class PostSecretActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
@@ -26,7 +25,7 @@ public class PostSecretActivity extends BaseActivity {
                             Intent intent = new Intent(PostSecretActivity.this, MainActivity.class);
                             startActivity(intent);
                         } else {
-
+                            Toast.makeText(PostSecretActivity.this, "投稿に失敗しました。時間をおいてもう一度お試し下さい。", Toast.LENGTH_LONG).show();
                         }
                     }
 
