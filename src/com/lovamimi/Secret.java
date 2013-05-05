@@ -30,6 +30,7 @@ public class Secret implements Serializable {
     private static final long serialVersionUID = 0x12345678L;
     private static final String TAG = "Secret";
 
+    String sid;
     String body;
     String datetime;
     String iconName;
@@ -37,19 +38,26 @@ public class Secret implements Serializable {
     int numLikes;
     List<Secret> comments;
 
-    @Override
-    public String toString() {
-        return "Secret [body=" + body + ", datetime=" + datetime + ", iconName=" + iconName + ", numComments="
-                + numComments + ", numLikes=" + numLikes + "]";
-    }
-
-    public Secret(String body, String datetime, String iconName, int numComments, int numLikes) {
-        super();
+    public Secret(String sid, String body, String datetime, String iconName, int numComments, int numLikes) {
+        this.sid = sid;
         this.body = body;
         this.datetime = datetime;
         this.iconName = iconName;
         this.numComments = numComments;
         this.numLikes = numLikes;
+    }
+
+    @Override
+    public String toString() {
+        return "Secret{" +
+                "sid='" + sid + '\'' +
+                ", body='" + body + '\'' +
+                ", datetime='" + datetime + '\'' +
+                ", iconName='" + iconName + '\'' +
+                ", numComments=" + numComments +
+                ", numLikes=" + numLikes +
+                ", comments=" + comments +
+                '}';
     }
 
     public int getIconResource() {
@@ -93,6 +101,42 @@ public class Secret implements Serializable {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public boolean postLike(String sessionId) {
+        sessionId = HttpHelper.chop(sessionId);
+        HttpClient client = new DefaultHttpClient();
+        String url = "http://lovamimi.com/ja";
+        HttpPost httpPost = new HttpPost(url);
+        BasicHttpContext httpContext = new BasicHttpContext();
+        CookieStore cookieStore = new BasicCookieStore();
+        BasicClientCookie cookie = new BasicClientCookie("SESSION_ID", sessionId);
+        cookie.setVersion(1);
+        cookie.setDomain("lovamimi.com");
+        cookie.setPath("/");
+        cookie.setExpiryDate(new Date(2032, 5, 16));
+        cookieStore.addCookie(cookie);
+        httpContext.setAttribute(ClientContext.COOKIE_STORE, cookieStore);
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("like_sid", sid));
+        params.add(new BasicNameValuePair("lang", "ja"));
+        try {
+            httpPost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
+            HttpResponse response = client.execute(httpPost, httpContext);
+            if (response.getStatusLine().getStatusCode() == 200) {
+                return true;
+            } else {
+                HttpEntity entity = response.getEntity();
+                InputStream in = entity.getContent();
+                String result = HttpHelper.streamToString(in);
+                in.close();
+                Log.e(TAG, result);
+                return false;
+            }
+        } catch (IOException e) {
+            Log.e(TAG, e.toString());
+            return false;
+        }
     }
 
     // todo: Extract http post
@@ -148,7 +192,7 @@ public class Secret implements Serializable {
                 extractSecrets(comments, commentsArray);
             }
             Log.d("", "secret=" + secret.getString("body"));
-            Secret s = new Secret(secret.getString("body"), secret.getString("datetime"), secret.getString("icon"),
+            Secret s = new Secret(secret.getString("sid"), secret.getString("body"), secret.getString("datetime"), secret.getString("icon"),
                     secret.getInt("num_comments"), secret.getInt("num_likes"));
             s.comments = comments;
             results.add(s);

@@ -66,8 +66,30 @@ public class MainActivity extends BaseActivity {
         OnClickListener likeListener = new OnClickListener() {
 
             @Override
-            public void onClick(View v) {
-                Log.d("hahaha", "hahah");
+            public void onClick(final View v) {
+                new AsyncTask<Secret, Void, Boolean>() {
+                    @Override
+                    protected void onPreExecute() {
+                        super.onPreExecute();
+                        TextView view = (TextView) v;
+                        view.setText("いいね(" + String.valueOf(secret.numLikes + 1) + ")");
+                    }
+
+                    @Override
+                    protected Boolean doInBackground(Secret... secrets) {
+                        if (getSessionId() == null) {
+                            return false;
+                        }
+                        Secret secret = secrets[0];
+                        return secret.postLike(getSessionId());
+                    }
+
+                    @Override
+                    protected void onPostExecute(Boolean isLikePosted) {
+                        super.onPostExecute(isLikePosted);
+                    }
+                }.execute(secret);
+
             }
         };
         numLikes.setOnClickListener(likeListener);
