@@ -1,6 +1,7 @@
 package com.lovamimi;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,8 +20,14 @@ public class PostSecretActivity extends BaseActivity {
                 EditText secretText = (EditText) findViewById(R.id.secret_text);
                 new AsyncTask<String, Void, Boolean>() {
                     @Override
-                    protected void onPostExecute(Boolean aBoolean) {
-                        super.onPostExecute(aBoolean);
+                    protected void onPostExecute(Boolean isPosted) {
+                        super.onPostExecute(isPosted);
+                        if (isPosted) {
+                            Intent intent = new Intent(PostSecretActivity.this, MainActivity.class);
+                            startActivity(intent);
+                        } else {
+
+                        }
                     }
 
                     @Override

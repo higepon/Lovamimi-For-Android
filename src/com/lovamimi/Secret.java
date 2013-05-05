@@ -28,6 +28,7 @@ import java.util.List;
 
 public class Secret implements Serializable {
     private static final long serialVersionUID = 0x12345678L;
+    private static final String TAG = "Secret";
 
     String body;
     String datetime;
@@ -96,6 +97,9 @@ public class Secret implements Serializable {
 
     // todo: Extract http post
     public static boolean post(String sessionId, String text) {
+        if (true) {
+            return true;
+        }
         // Server side bug, sessionId has "\n" on it's tail.
         sessionId = HttpHelper.chop(sessionId);
         HttpClient client = new DefaultHttpClient();
@@ -107,7 +111,7 @@ public class Secret implements Serializable {
         cookie.setVersion(1);
         cookie.setDomain("lovamimi.com");
         cookie.setPath("/");
-        cookie.setExpiryDate(new Date(2014, 5, 16));
+        cookie.setExpiryDate(new Date(2032, 5, 16));
         cookieStore.addCookie(cookie);
         httpContext.setAttribute(ClientContext.COOKIE_STORE, cookieStore);
         List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -115,16 +119,20 @@ public class Secret implements Serializable {
         params.add(new BasicNameValuePair("lang", "ja"));
         try {
             httpPost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
-            Log.d("POST", httpContext.toString());
             HttpResponse response = client.execute(httpPost, httpContext);
-            HttpEntity entity = response.getEntity();
-            InputStream in = entity.getContent();
-            String result = HttpHelper.streamToString(in);
-            in.close();
-            Log.d("HAGe", result);
-            return true;
+            if (response.getStatusLine().getStatusCode() == 200) {
+                return true;
+            } else {
+                HttpEntity entity = response.getEntity();
+                InputStream in = entity.getContent();
+                String result = HttpHelper.streamToString(in);
+                in.close();
+                Log.e(TAG, result);
+                return false;
+            }
         } catch (IOException e) {
-            throw new AssertionError("IO Error");
+            Log.e(TAG, e.toString());
+            return false;
         }
     }
 

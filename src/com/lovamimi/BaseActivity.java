@@ -2,12 +2,12 @@ package com.lovamimi;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
 public class BaseActivity extends Activity {
 
     protected MixpanelAPI mixpanel;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -16,6 +16,10 @@ public class BaseActivity extends Activity {
 
     protected void track(String eventName) {
         mixpanel.track("Android:" + eventName, null);
+    }
+
+    protected void error(String s) {
+        Log.e(this.getClass().toString(), s);
     }
 
     @Override
