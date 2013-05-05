@@ -3,7 +3,7 @@
             android:id="@+id/action_status_update"
             android:showAsAction="always|withText"
             android:title="update"
-            android:icon="@android:drawable/ic_menu_add"
+            android:icon="@android:drawable/ic_menu_edit"
             android:titleCondensed="update">
     </item>
 </menu>
