@@ -115,12 +115,8 @@ public class Secret implements Serializable {
         HttpClient client = new DefaultHttpClient();
         String url = "http://lovamimi.com/ja";
         HttpPost httpPost = new HttpPost(url);
-//        httpPost.addHeader("Cookie", "SESSION_ID=" + sessionId);
-
         BasicHttpContext mHttpContext = new BasicHttpContext();
         CookieStore mCookieStore      = new BasicCookieStore();
-
-
         BasicClientCookie cookie = new BasicClientCookie("SESSION_ID", sessionId);
         cookie.setVersion(1);
         cookie.setDomain("lovamimi.com");
@@ -128,24 +124,15 @@ public class Secret implements Serializable {
         cookie.setExpiryDate(new Date(2014, 5, 16));
         Log.d("hage", cookie.toString());
         mCookieStore.addCookie(cookie);
-
         mHttpContext.setAttribute(ClientContext.COOKIE_STORE, mCookieStore);
-
-
-        //httpPost.setHeader("Cookie", "SESSION_ID=" + sessionId);
         Log.d("hage", "last<" + sessionId.charAt(sessionId.length() - 1) + ">");
-//        String cookieString="SESSION_ID=" + sessionId + ";Path=/;expires=Wed, 07-Nov-2019 14:52:08 GMT;domain=lovamimi.com; ;";
-//        httpPost.setHeader("Set-Cookie", cookieString);
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("body", text));
         params.add(new BasicNameValuePair("lang", "ja"));
         try {
-            //Log.d("hoge", httpPost.getAllHeaders()[0].toString());
             httpPost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
-            Log.d("POST", "POST");
             Log.d("POST", mHttpContext.toString());
             HttpResponse response = client.execute(httpPost, mHttpContext);
-            //HttpResponse response = client.execute(httpPost);
             HttpEntity entity = response.getEntity();
             InputStream in = entity.getContent();
             String result = convertStreamToString(in);
