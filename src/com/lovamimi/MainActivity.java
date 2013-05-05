@@ -169,7 +169,12 @@ public class MainActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_status_update) {
-            tryLogin();
+            if (getSessionId() == null) {
+                tryLogin();
+            } else {
+                Intent intent = new Intent(MainActivity.this, PostSecretActivity.class);
+                startActivity(intent);
+            }
             return true;
         }
         return false;
