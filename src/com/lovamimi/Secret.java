@@ -1,9 +1,25 @@
 package com.lovamimi;
 
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.CookieStore;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.protocol.ClientContext;
+import org.apache.http.impl.client.BasicCookieStore;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.cookie.BasicClientCookie;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.BasicHttpContext;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -80,10 +96,86 @@ public class Secret implements Serializable {
 		return null;
 	}
 
-    public static boolean post(String sessionId, String text) {
-        return true;
+    public static String chop(String s) {
+        if (s.isEmpty()) {
+            return s;
+        } else {
+            if (s.charAt(s.length() - 1) == '\n') {
+                return s.substring(0, s.length() - 1);
+            } else {
+                return s;
+            }
+        }
     }
 
+    public static boolean post(String sessionId, String text) {
+        sessionId = Secret.chop(sessionId);
+        HttpClient client = new DefaultHttpClient();
+        String url = "http://lovamimi.com/ja";
+        HttpPost httpPost = new HttpPost(url);
+//        httpPost.addHeader("Cookie", "SESSION_ID=" + sessionId);
+
+        BasicHttpContext mHttpContext = new BasicHttpContext();
+        CookieStore mCookieStore      = new BasicCookieStore();
+
+
+        BasicClientCookie cookie = new BasicClientCookie("SESSION_ID", sessionId);
+        cookie.setVersion(1);
+        cookie.setDomain("lovamimi.com");
+        cookie.setPath("/");
+        cookie.setExpiryDate(new Date(2014, 5, 16));
+        Log.d("hage", cookie.toString());
+        mCookieStore.addCookie(cookie);
+
+        mHttpContext.setAttribute(ClientContext.COOKIE_STORE, mCookieStore);
+
+
+        //httpPost.setHeader("Cookie", "SESSION_ID=" + sessionId);
+        Log.d("hage", "last<" + sessionId.charAt(sessionId.length() - 1) + ">");
+//        String cookieString="SESSION_ID=" + sessionId + ";Path=/;expires=Wed, 07-Nov-2019 14:52:08 GMT;domain=lovamimi.com; ;";
+//        httpPost.setHeader("Set-Cookie", cookieString);
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("body", text));
+        params.add(new BasicNameValuePair("lang", "ja"));
+        try {
+            //Log.d("hoge", httpPost.getAllHeaders()[0].toString());
+            httpPost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
+            Log.d("POST", "POST");
+            Log.d("POST", mHttpContext.toString());
+            HttpResponse response = client.execute(httpPost, mHttpContext);
+            //HttpResponse response = client.execute(httpPost);
+            HttpEntity entity = response.getEntity();
+            InputStream in = entity.getContent();
+            String result = convertStreamToString(in);
+            in.close();
+            Log.d("HAGe", result);
+            return true;
+        } catch (IOException e) {
+            throw new AssertionError("IO Error");
+        }
+    }
+
+    // duplicate
+    private static String convertStreamToString(InputStream is) {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        StringBuilder sb = new StringBuilder();
+        String line;
+        try {
+            while ((line = reader.readLine()) != null) {
+                sb.append(line + "\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        } finally {
+            try {
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return sb.toString();
+    }
 /*
     NSMutableURLRequest* request = [Secret createLovamimiRequest:@"http://lovamimi.com/ja" requestBody:requestBody];
     SecretPoster* poster = [[SecretPoster alloc] initWithDelegate:delegate];

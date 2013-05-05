@@ -1,6 +1,7 @@
 package com.lovamimi;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +17,17 @@ public class PostSecretActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 EditText secretText = (EditText) findViewById(R.id.secret_text);
-                Secret.post(getSessionId(), secretText.getText().toString());
+                new AsyncTask<String, Void, Boolean>() {
+                    @Override
+                    protected void onPostExecute(Boolean aBoolean) {
+                        super.onPostExecute(aBoolean);
+                    }
+
+                    @Override
+                    protected Boolean doInBackground(String... strings) {
+                        return Secret.post(strings[0], strings[1]);
+                    }
+                }.execute(getSessionId(), secretText.getText().toString());
             }
         });
     }
