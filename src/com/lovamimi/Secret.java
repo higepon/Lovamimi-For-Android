@@ -117,7 +117,7 @@ public class Secret implements Serializable {
             HttpResponse response = client.execute(httpPost, httpContext);
             HttpEntity entity = response.getEntity();
             InputStream in = entity.getContent();
-            String result = convertStreamToString(in);
+            String result = HttpHelper.streamToString(in);
             in.close();
             Log.d("HAGe", result);
             return true;
@@ -126,57 +126,6 @@ public class Secret implements Serializable {
         }
     }
 
-    // duplicate
-    private static String convertStreamToString(InputStream is) {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        StringBuilder sb = new StringBuilder();
-        String line;
-        try {
-            while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return sb.toString();
-    }
-
-    /*
-        NSMutableURLRequest* request = [Secret createLovamimiRequest:@"http://lovamimi.com/ja" requestBody:requestBody];
-        SecretPoster* poster = [[SecretPoster alloc] initWithDelegate:delegate];
-        NSURLConnection* conn = [[NSURLConnection alloc] initWithRequest:request delegate:poster];
-        if (conn == nil) {
-            [delegate onSecretPostComplete:@"接続エラー"];
-            return;
-        }
-        NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
-        if (requestBody != nil) {
-            request.HTTPMethod = @"POST";
-            request.HTTPBody = [requestBody dataUsingEncoding:NSUTF8StringEncoding];
-        } else {
-            request.HTTPMethod = @"GET";
-        }
-        AppDelegate* appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-        assert(appDelegate);
-        NSDictionary *properties = [NSDictionary dictionaryWithObjectsAndKeys:
-                                  @"lovamimi.com", NSHTTPCookieDomain,
-                                  @"/", NSHTTPCookiePath,
-                                  @"SESSION_ID", NSHTTPCookieName,
-                                  appDelegate.session.id, NSHTTPCookieValue,
-                                  nil];
-        NSHTTPCookie *cookie = [NSHTTPCookie cookieWithProperties:properties];
-        NSArray* cookies = [NSArray arrayWithObjects: cookie, nil];
-        NSDictionary * headers = [NSHTTPCookie requestHeaderFieldsWithCookies:cookies];
-        [request setAllHTTPHeaderFields:headers];
-        return request;
-         */
     private static void extractSecrets(ArrayList<Secret> results, JSONArray secrets) throws JSONException {
         for (int i = 0; i < secrets.length(); i++) {
             JSONObject secret = secrets.getJSONObject(i);

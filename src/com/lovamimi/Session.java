@@ -34,7 +34,7 @@ public class Session {
             HttpEntity entity = response.getEntity();
             if (entity != null) {
                 InputStream in = entity.getContent();
-                String result = convertStreamToString(in);
+                String result = HttpHelper.streamToString(in);
                 in.close();
                 return result;
             }
@@ -44,24 +44,5 @@ public class Session {
         }
     }
 
-    private static String convertStreamToString(InputStream is) {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        StringBuilder sb = new StringBuilder();
-        String line;
-        try {
-            while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
 
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return sb.toString();
-    }
 }
