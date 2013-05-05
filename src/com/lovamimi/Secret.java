@@ -104,80 +104,11 @@ public class Secret implements Serializable {
     }
 
     public boolean postLike(String sessionId) {
-        sessionId = HttpHelper.chop(sessionId);
-        HttpClient client = new DefaultHttpClient();
-        String url = "http://lovamimi.com/ja";
-        HttpPost httpPost = new HttpPost(url);
-        BasicHttpContext httpContext = new BasicHttpContext();
-        CookieStore cookieStore = new BasicCookieStore();
-        BasicClientCookie cookie = new BasicClientCookie("SESSION_ID", sessionId);
-        cookie.setVersion(1);
-        cookie.setDomain("lovamimi.com");
-        cookie.setPath("/");
-        cookie.setExpiryDate(new Date(2032, 5, 16));
-        cookieStore.addCookie(cookie);
-        httpContext.setAttribute(ClientContext.COOKIE_STORE, cookieStore);
-        List<NameValuePair> params = new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("like_sid", sid));
-        params.add(new BasicNameValuePair("lang", "ja"));
-        try {
-            httpPost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
-            HttpResponse response = client.execute(httpPost, httpContext);
-            if (response.getStatusLine().getStatusCode() == 200) {
-                return true;
-            } else {
-                HttpEntity entity = response.getEntity();
-                InputStream in = entity.getContent();
-                String result = HttpHelper.streamToString(in);
-                in.close();
-                Log.e(TAG, result);
-                return false;
-            }
-        } catch (IOException e) {
-            Log.e(TAG, e.toString());
-            return false;
-        }
+        return HttpHelper.postLovamimi(sessionId, new BasicNameValuePair("like_sid", sid));
     }
 
-    // todo: Extract http post
     public static boolean post(String sessionId, String text) {
-        if (Config.isFakeWrite) {
-            return false;
-        }
-        // Server side bug, sessionId has "\n" on it's tail.
-        sessionId = HttpHelper.chop(sessionId);
-        HttpClient client = new DefaultHttpClient();
-        String url = "http://lovamimi.com/ja";
-        HttpPost httpPost = new HttpPost(url);
-        BasicHttpContext httpContext = new BasicHttpContext();
-        CookieStore cookieStore = new BasicCookieStore();
-        BasicClientCookie cookie = new BasicClientCookie("SESSION_ID", sessionId);
-        cookie.setVersion(1);
-        cookie.setDomain("lovamimi.com");
-        cookie.setPath("/");
-        cookie.setExpiryDate(new Date(2032, 5, 16));
-        cookieStore.addCookie(cookie);
-        httpContext.setAttribute(ClientContext.COOKIE_STORE, cookieStore);
-        List<NameValuePair> params = new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("text", text));
-        params.add(new BasicNameValuePair("lang", "ja"));
-        try {
-            httpPost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
-            HttpResponse response = client.execute(httpPost, httpContext);
-            if (response.getStatusLine().getStatusCode() == 200) {
-                return true;
-            } else {
-                HttpEntity entity = response.getEntity();
-                InputStream in = entity.getContent();
-                String result = HttpHelper.streamToString(in);
-                in.close();
-                Log.e(TAG, result);
-                return false;
-            }
-        } catch (IOException e) {
-            Log.e(TAG, e.toString());
-            return false;
-        }
+        return HttpHelper.postLovamimi(sessionId, new BasicNameValuePair("text", text));
     }
 
     private static void extractSecrets(ArrayList<Secret> results, JSONArray secrets) throws JSONException {
