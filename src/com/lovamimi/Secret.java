@@ -96,6 +96,7 @@ public class Secret implements Serializable {
 		return null;
 	}
 
+    // todo move
     public static String chop(String s) {
         if (s.isEmpty()) {
             return s;
@@ -109,6 +110,7 @@ public class Secret implements Serializable {
     }
 
     public static boolean post(String sessionId, String text) {
+        // Server side bug, sessionId has "\n" on it's tail.
         sessionId = Secret.chop(sessionId);
         HttpClient client = new DefaultHttpClient();
         String url = "http://lovamimi.com/ja";
