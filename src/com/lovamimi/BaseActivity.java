@@ -23,4 +23,14 @@ public class BaseActivity extends Activity {
         super.onDestroy();
         mixpanel.flush();
     }
+
+    public String getSessionId() {
+        LovamimiApplication app = (LovamimiApplication) getApplication();
+        return app.getSessionId();
+    }
+
+    public void setSessionId(String sessionId) {
+        LovamimiApplication app = (LovamimiApplication) getApplication();
+        app.setSessionId(sessionId);
+    }
 }

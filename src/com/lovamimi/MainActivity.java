@@ -17,9 +17,6 @@ import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import java.util.List;
 
 public class MainActivity extends BaseActivity {
-
-    private String sessionId = null;
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -124,14 +121,10 @@ public class MainActivity extends BaseActivity {
     private void lovamimiLogin(String fbSessionId) {
         new AsyncTask<String, Void, String>() {
             @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                Log.d("hoge", "session=" + s);
-                synchronized (MainActivity.this) {
-                    sessionId = s;
-                }
+            protected void onPostExecute(String sessionId) {
+                super.onPostExecute(sessionId);
+                setSessionId(sessionId);
                 Intent intent = new Intent(MainActivity.this, PostSecretActivity.class);
-//                intent.putExtra("secret", secrets.);
                 startActivity(intent);
             }
 
