@@ -63,6 +63,14 @@ public class MainActivity extends BaseActivity {
         commentIcon.setOnClickListener(listener);
         TextView numLikes = (TextView) incLayout.findViewById(R.id.num_likes);
         numLikes.setText("いいね(" + String.valueOf(secret.numLikes) + ")");
+        OnClickListener likeListener = new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Log.d("hahaha", "hahah");
+            }
+        };
+        numLikes.setOnClickListener(likeListener);
 
         ImageView icon = (ImageView) incLayout.findViewById(R.id.profile_image);
         icon.setImageResource(secret.getIconResource());
