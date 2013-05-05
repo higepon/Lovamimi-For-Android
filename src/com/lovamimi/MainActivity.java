@@ -1,6 +1,8 @@
 package com.lovamimi;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -170,11 +172,30 @@ public class MainActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_status_update) {
             if (getSessionId() == null) {
-                tryLogin();
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+                alertDialogBuilder.setTitle("ログイン");
+                alertDialogBuilder.setMessage("匿名投稿といいね！をするには Facebook ログインが必要です");
+                alertDialogBuilder.setPositiveButton("Facebook ログイン",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                tryLogin();
+                            }
+                        });
+                alertDialogBuilder.setNegativeButton("キャンセル",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        });
+                alertDialogBuilder.setCancelable(true);
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
             } else {
                 Intent intent = new Intent(MainActivity.this, PostSecretActivity.class);
                 startActivity(intent);
             }
+
             return true;
         }
         return false;
