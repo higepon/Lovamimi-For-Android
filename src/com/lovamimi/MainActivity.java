@@ -72,7 +72,8 @@ public class MainActivity extends BaseActivity {
                     protected void onPreExecute() {
                         super.onPreExecute();
                         TextView view = (TextView) v;
-                        view.setText("いいね(" + String.valueOf(secret.numLikes + 1) + ")");
+                        secret.numLikes++;
+                        view.setText("いいね(" + String.valueOf(secret.numLikes) + ")");
                     }
 
                     @Override
