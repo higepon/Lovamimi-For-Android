@@ -77,9 +77,42 @@ public class Secret implements Serializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;	
+		return null;
 	}
 
+    public static boolean post(String sessionId, String text) {
+        return true;
+    }
+
+/*
+    NSMutableURLRequest* request = [Secret createLovamimiRequest:@"http://lovamimi.com/ja" requestBody:requestBody];
+    SecretPoster* poster = [[SecretPoster alloc] initWithDelegate:delegate];
+    NSURLConnection* conn = [[NSURLConnection alloc] initWithRequest:request delegate:poster];
+    if (conn == nil) {
+        [delegate onSecretPostComplete:@"接続エラー"];
+        return;
+    }
+    NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
+    if (requestBody != nil) {
+        request.HTTPMethod = @"POST";
+        request.HTTPBody = [requestBody dataUsingEncoding:NSUTF8StringEncoding];
+    } else {
+        request.HTTPMethod = @"GET";
+    }
+    AppDelegate* appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    assert(appDelegate);
+    NSDictionary *properties = [NSDictionary dictionaryWithObjectsAndKeys:
+                              @"lovamimi.com", NSHTTPCookieDomain,
+                              @"/", NSHTTPCookiePath,
+                              @"SESSION_ID", NSHTTPCookieName,
+                              appDelegate.session.id, NSHTTPCookieValue,
+                              nil];
+    NSHTTPCookie *cookie = [NSHTTPCookie cookieWithProperties:properties];
+    NSArray* cookies = [NSArray arrayWithObjects: cookie, nil];
+    NSDictionary * headers = [NSHTTPCookie requestHeaderFieldsWithCookies:cookies];
+    [request setAllHTTPHeaderFields:headers];
+    return request;
+     */
 	private static void extractSecrets(ArrayList<Secret> results, JSONArray secrets) throws JSONException {
 		for (int i = 0; i < secrets.length(); i++) {
 			JSONObject secret = secrets.getJSONObject(i);

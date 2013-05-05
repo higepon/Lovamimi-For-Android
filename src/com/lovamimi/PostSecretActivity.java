@@ -16,7 +16,7 @@ public class PostSecretActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 EditText secretText = (EditText) findViewById(R.id.secret_text);
-                Log.d("hage", secretText.getText().toString());
+                Secret.post(getSessionId(), secretText.getText().toString());
             }
         });
     }
