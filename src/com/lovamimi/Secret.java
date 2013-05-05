@@ -92,23 +92,10 @@ public class Secret implements Serializable {
         return null;
     }
 
-    // todo move
-    public static String chop(String s) {
-        if (s.isEmpty()) {
-            return s;
-        } else {
-            if (s.charAt(s.length() - 1) == '\n') {
-                return s.substring(0, s.length() - 1);
-            } else {
-                return s;
-            }
-        }
-    }
-
     // todo: Extract http post
     public static boolean post(String sessionId, String text) {
         // Server side bug, sessionId has "\n" on it's tail.
-        sessionId = Secret.chop(sessionId);
+        sessionId = HttpHelper.chop(sessionId);
         HttpClient client = new DefaultHttpClient();
         String url = "http://lovamimi.com/ja";
         HttpPost httpPost = new HttpPost(url);
