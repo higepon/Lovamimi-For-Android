@@ -97,7 +97,7 @@ public class Secret implements Serializable {
 
     // todo: Extract http post
     public static boolean post(String sessionId, String text) {
-        if (true) {
+        if (Config.isFakeWrite) {
             return true;
         }
         // Server side bug, sessionId has "\n" on it's tail.
