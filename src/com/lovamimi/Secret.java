@@ -2,28 +2,13 @@ package com.lovamimi;
 
 import android.util.Log;
 import com.androidhive.jsonparsing.JSONParser;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.CookieStore;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.protocol.ClientContext;
-import org.apache.http.impl.client.BasicCookieStore;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.protocol.BasicHttpContext;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Secret implements Serializable {
@@ -58,6 +43,11 @@ public class Secret implements Serializable {
                 ", numLikes=" + numLikes +
                 ", comments=" + comments +
                 '}';
+    }
+
+    public String getCid() {
+        // For comment.cid, we use numComments field
+        return Integer.toString(this.numComments);
     }
 
     public int getIconResource() {
@@ -105,6 +95,13 @@ public class Secret implements Serializable {
 
     public boolean postLike(String sessionId) {
         return HttpHelper.postLovamimi(sessionId, new BasicNameValuePair("like_sid", sid));
+    }
+
+    public boolean postCommentLike(String sessionId) {
+        Log.d("hage postCommentLike", sid + ":" + getCid());
+        return HttpHelper.postLovamimi(sessionId,
+                new BasicNameValuePair("like_sid", sid),
+                new BasicNameValuePair("like_cid", getCid()));
     }
 
     public static boolean post(String sessionId, String text) {
