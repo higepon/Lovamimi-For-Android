@@ -13,7 +13,7 @@ import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
 public class BaseActivity extends Activity {
 
-    protected MixpanelAPI mixpanel;
+    private MixpanelAPI mixpanel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

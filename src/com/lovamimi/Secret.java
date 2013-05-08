@@ -18,7 +18,7 @@ public class Secret implements Serializable {
     String sid;
     String body;
     String datetime;
-    String iconName;
+    private String iconName;
     int numComments;
     int numLikes;
     List<Secret> comments;
