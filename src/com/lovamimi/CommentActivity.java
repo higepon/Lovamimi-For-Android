@@ -47,6 +47,7 @@ public class CommentActivity extends BaseActivity {
 
                 @Override
                 public void onClick(final View v) {
+                    track("Liked comment");
                     new AsyncTask<Secret, Void, Boolean>() {
                         @Override
                         protected void onPreExecute() {

@@ -76,6 +76,7 @@ public class BaseActivity extends Activity {
     }
 
     private void showLoginDialog(final Class nextActivityClass) {
+        track("Showed Login Dialog");
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setTitle("ログイン");
         alertDialogBuilder.setMessage("匿名投稿といいね！をするには Facebook ログインが必要です");
@@ -83,6 +84,7 @@ public class BaseActivity extends Activity {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        track("Clicked button Login Dialog");
                         tryLogin(BaseActivity.this, nextActivityClass);
                     }
                 });
@@ -90,6 +92,7 @@ public class BaseActivity extends Activity {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        track("Canceled Login Dialog");
                     }
                 });
         alertDialogBuilder.setCancelable(true);

@@ -16,6 +16,7 @@ public class PostCommentActivity extends BaseActivity {
         postButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                track("Post Comment");
                 EditText secretText = (EditText) findViewById(R.id.secret_text);
                 String sid = getIntent().getExtras().getString("sid");
                 new AsyncTask<String, Void, Boolean>() {
@@ -26,6 +27,7 @@ public class PostCommentActivity extends BaseActivity {
                             Intent intent = new Intent(PostCommentActivity.this, MainActivity.class);
                             startActivity(intent);
                         } else {
+                            track("Failed Post Comment");
                             Toast.makeText(PostCommentActivity.this, "投稿に失敗しました。時間をおいてもう一度お試し下さい。", Toast.LENGTH_LONG).show();
                         }
                     }

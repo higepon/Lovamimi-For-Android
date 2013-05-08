@@ -16,6 +16,7 @@ public class PostSecretActivity extends BaseActivity {
         postButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                track("Post Secret");
                 EditText secretText = (EditText) findViewById(R.id.secret_text);
                 new AsyncTask<String, Void, Boolean>() {
                     @Override
@@ -25,6 +26,7 @@ public class PostSecretActivity extends BaseActivity {
                             Intent intent = new Intent(PostSecretActivity.this, MainActivity.class);
                             startActivity(intent);
                         } else {
+                            track("Failed Post Secret");
                             Toast.makeText(PostSecretActivity.this, "投稿に失敗しました。時間をおいてもう一度お試し下さい。", Toast.LENGTH_LONG).show();
                         }
                     }

@@ -65,6 +65,7 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onClick(final View v) {
+                track("Liked secret");
                 new AsyncTask<Secret, Void, Boolean>() {
                     @Override
                     protected void onPreExecute() {
