@@ -1,15 +1,20 @@
 package com.lovamimi;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import com.facebook.*;
 
 import java.util.List;
 
@@ -98,5 +103,65 @@ public class CommentActivity extends BaseActivity {
         getMenuInflater().inflate(R.menu.comment, menu);
         return true;
     }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_status_update) {
+            if (getSessionId() == null) {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+                alertDialogBuilder.setTitle("ログイン");
+                alertDialogBuilder.setMessage("匿名投稿といいね！をするには Facebook ログインが必要です");
+                alertDialogBuilder.setPositiveButton("Facebook ログイン",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                tryLogin();
+                            }
+                        });
+                alertDialogBuilder.setNegativeButton("キャンセル",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        });
+                alertDialogBuilder.setCancelable(true);
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+            } else {
+                Intent intent = new Intent(CommentActivity.this, PostSecretActivity.class);
+                startActivity(intent);
+                Secret secret = (Secret) getIntent().getExtras().get("secret");
+                intent.putExtra("sid", secret.sid);
+            }
 
+            return true;
+        }
+        return false;
+    }
+
+    private void lovamimiLogin(String fbSessionId) {
+        new AsyncTask<String, Void, String>() {
+            @Override
+            protected void onPostExecute(String sessionId) {
+                super.onPostExecute(sessionId);
+                setSessionId(sessionId);
+                Intent intent = new Intent(CommentActivity.this, PostSecretActivity.class);
+                startActivity(intent);
+            }
+
+            @Override
+            protected String doInBackground(String... strings) {
+                String fbSessionId = strings[0];
+                return com.lovamimi.Session.login(fbSessionId);
+            }
+        }.execute(fbSessionId);
+    }
+
+    private void tryLogin() {
+        // Facebook login
+        com.facebook.Session.openActiveSession(this, true, new com.facebook.Session.StatusCallback() {
+            @Override
+            public void call(com.facebook.Session session, SessionState state, Exception exception) {
+                lovamimiLogin(session.getAccessToken());
+            }
+        });
+    }
 }

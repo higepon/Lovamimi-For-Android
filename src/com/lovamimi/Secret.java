@@ -108,6 +108,12 @@ public class Secret implements Serializable {
         return HttpHelper.postLovamimi(sessionId, new BasicNameValuePair("text", text));
     }
 
+    public static boolean postComment(String sessionId, String sid, String body) {
+        return HttpHelper.postLovamimi(sessionId,
+                new BasicNameValuePair("body", body),
+                new BasicNameValuePair("sid", sid));
+    }
+
     private static void extractSecrets(ArrayList<Secret> results, JSONArray secrets) throws JSONException {
         for (int i = 0; i < secrets.length(); i++) {
             JSONObject secret = secrets.getJSONObject(i);
