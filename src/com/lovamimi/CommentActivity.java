@@ -14,10 +14,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import com.facebook.*;
 
 import java.util.List;
-
 
 public class CommentActivity extends BaseActivity {
 
@@ -103,6 +101,7 @@ public class CommentActivity extends BaseActivity {
         getMenuInflater().inflate(R.menu.comment, menu);
         return true;
     }
+
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_status_update) {
             if (getSessionId() == null) {
@@ -136,5 +135,4 @@ public class CommentActivity extends BaseActivity {
         }
         return false;
     }
-
 }
