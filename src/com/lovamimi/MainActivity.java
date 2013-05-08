@@ -150,24 +150,6 @@ public class MainActivity extends BaseActivity {
         return true;
     }
 
-    private void lovamimiLogin(String fbSessionId) {
-        new AsyncTask<String, Void, String>() {
-            @Override
-            protected void onPostExecute(String sessionId) {
-                super.onPostExecute(sessionId);
-                setSessionId(sessionId);
-                Intent intent = new Intent(MainActivity.this, PostSecretActivity.class);
-                startActivity(intent);
-            }
-
-            @Override
-            protected String doInBackground(String... strings) {
-                String fbSessionId = strings[0];
-                return com.lovamimi.Session.login(fbSessionId);
-            }
-        }.execute(fbSessionId);
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_status_update) {
@@ -179,7 +161,7 @@ public class MainActivity extends BaseActivity {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                tryLogin();
+                                tryLogin(MainActivity.this, PostSecretActivity.class);
                             }
                         });
                 alertDialogBuilder.setNegativeButton("キャンセル",
@@ -199,15 +181,5 @@ public class MainActivity extends BaseActivity {
             return true;
         }
         return false;
-    }
-
-    private void tryLogin() {
-        // Facebook login
-        Session.openActiveSession(this, true, new Session.StatusCallback() {
-            @Override
-            public void call(Session session, SessionState state, Exception exception) {
-                lovamimiLogin(session.getAccessToken());
-            }
-        });
     }
 }
