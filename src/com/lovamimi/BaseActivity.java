@@ -46,8 +46,8 @@ public class BaseActivity extends Activity {
     }
 
     private void lovamimiLogin(final Context context,
-                                 final Class nextActivityClass,
-                                 String fbSessionId) {
+                               final Class nextActivityClass,
+                               String fbSessionId) {
         new AsyncTask<String, Void, String>() {
             @Override
             protected void onPostExecute(String sessionId) {

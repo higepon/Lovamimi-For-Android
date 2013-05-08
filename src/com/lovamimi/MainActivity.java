@@ -1,8 +1,6 @@
 package com.lovamimi;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -10,7 +8,6 @@ import android.view.*;
 import android.view.View.OnClickListener;
 import android.widget.*;
 import com.facebook.Session;
-import com.facebook.SessionState;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
