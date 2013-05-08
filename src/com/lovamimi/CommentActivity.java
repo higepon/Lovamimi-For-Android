@@ -105,32 +105,13 @@ public class CommentActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_status_update) {
             if (getSessionId() == null) {
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-                alertDialogBuilder.setTitle("ログイン");
-                alertDialogBuilder.setMessage("匿名投稿といいね！をするには Facebook ログインが必要です");
-                alertDialogBuilder.setPositiveButton("Facebook ログイン",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                tryLogin(CommentActivity.this, PostSecretActivity.class);
-                            }
-                        });
-                alertDialogBuilder.setNegativeButton("キャンセル",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        });
-                alertDialogBuilder.setCancelable(true);
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                alertDialog.show();
+                showLoginDialog(CommentActivity.this, PostCommentActivity.class);
             } else {
-                Intent intent = new Intent(CommentActivity.this, PostSecretActivity.class);
+                Intent intent = new Intent(CommentActivity.this, PostCommentActivity.class);
                 startActivity(intent);
                 Secret secret = (Secret) getIntent().getExtras().get("secret");
                 intent.putExtra("sid", secret.sid);
             }
-
             return true;
         }
         return false;
