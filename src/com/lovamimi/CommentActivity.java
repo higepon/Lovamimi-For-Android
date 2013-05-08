@@ -113,7 +113,7 @@ public class CommentActivity extends BaseActivity {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                tryLogin();
+                                tryLogin(CommentActivity.this, PostSecretActivity.class);
                             }
                         });
                 alertDialogBuilder.setNegativeButton("キャンセル",
@@ -137,31 +137,4 @@ public class CommentActivity extends BaseActivity {
         return false;
     }
 
-    private void lovamimiLogin(String fbSessionId) {
-        new AsyncTask<String, Void, String>() {
-            @Override
-            protected void onPostExecute(String sessionId) {
-                super.onPostExecute(sessionId);
-                setSessionId(sessionId);
-                Intent intent = new Intent(CommentActivity.this, PostSecretActivity.class);
-                startActivity(intent);
-            }
-
-            @Override
-            protected String doInBackground(String... strings) {
-                String fbSessionId = strings[0];
-                return com.lovamimi.Session.login(fbSessionId);
-            }
-        }.execute(fbSessionId);
-    }
-
-    private void tryLogin() {
-        // Facebook login
-        com.facebook.Session.openActiveSession(this, true, new com.facebook.Session.StatusCallback() {
-            @Override
-            public void call(com.facebook.Session session, SessionState state, Exception exception) {
-                lovamimiLogin(session.getAccessToken());
-            }
-        });
-    }
 }

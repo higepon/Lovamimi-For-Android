@@ -1,8 +1,12 @@
 package com.lovamimi;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import com.facebook.SessionState;
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
 public class BaseActivity extends Activity {
@@ -38,4 +42,35 @@ public class BaseActivity extends Activity {
         LovamimiApplication app = (LovamimiApplication) getApplication();
         app.setSessionId(sessionId);
     }
+
+    private void lovamimiLogin(final Context context,
+                                 final Class nextActivityClass,
+                                 String fbSessionId) {
+        new AsyncTask<String, Void, String>() {
+            @Override
+            protected void onPostExecute(String sessionId) {
+                super.onPostExecute(sessionId);
+                setSessionId(sessionId);
+                Intent intent = new Intent(context, nextActivityClass);
+                startActivity(intent);
+            }
+
+            @Override
+            protected String doInBackground(String... strings) {
+                String fbSessionId = strings[0];
+                return com.lovamimi.Session.login(fbSessionId);
+            }
+        }.execute(fbSessionId);
+    }
+
+    protected void tryLogin(final Context context, final Class nextActivityClass) {
+        // Facebook login
+        com.facebook.Session.openActiveSession(this, true, new com.facebook.Session.StatusCallback() {
+            @Override
+            public void call(com.facebook.Session session, SessionState state, Exception exception) {
+                lovamimiLogin(context, nextActivityClass, session.getAccessToken());
+            }
+        });
+    }
+
 }
