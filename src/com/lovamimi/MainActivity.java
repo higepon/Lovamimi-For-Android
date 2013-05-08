@@ -154,25 +154,7 @@ public class MainActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_status_update) {
             if (getSessionId() == null) {
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-                alertDialogBuilder.setTitle("ログイン");
-                alertDialogBuilder.setMessage("匿名投稿といいね！をするには Facebook ログインが必要です");
-                alertDialogBuilder.setPositiveButton("Facebook ログイン",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                tryLogin(MainActivity.this, PostSecretActivity.class);
-                            }
-                        });
-                alertDialogBuilder.setNegativeButton("キャンセル",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        });
-                alertDialogBuilder.setCancelable(true);
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                alertDialog.show();
+                showLoginDialog(MainActivity.this, PostSecretActivity.class);
             } else {
                 Intent intent = new Intent(MainActivity.this, PostSecretActivity.class);
                 startActivity(intent);
@@ -181,5 +163,27 @@ public class MainActivity extends BaseActivity {
             return true;
         }
         return false;
+    }
+
+    protected void showLoginDialog(final Context context, final Class nextActivityClass) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("ログイン");
+        alertDialogBuilder.setMessage("匿名投稿といいね！をするには Facebook ログインが必要です");
+        alertDialogBuilder.setPositiveButton("Facebook ログイン",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        tryLogin(context, nextActivityClass);
+                    }
+                });
+        alertDialogBuilder.setNegativeButton("キャンセル",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+        alertDialogBuilder.setCancelable(true);
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 }
