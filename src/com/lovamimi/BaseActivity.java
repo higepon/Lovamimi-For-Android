@@ -65,7 +65,7 @@ public class BaseActivity extends Activity {
         }.execute(fbSessionId);
     }
 
-    protected void tryLogin(final Context context, final Class nextActivityClass) {
+    private void tryLogin(final Context context, final Class nextActivityClass) {
         // Facebook login
         com.facebook.Session.openActiveSession(this, true, new com.facebook.Session.StatusCallback() {
             @Override
@@ -75,7 +75,7 @@ public class BaseActivity extends Activity {
         });
     }
 
-    protected void showLoginDialog(final Context context, final Class nextActivityClass) {
+    protected void showLoginDialog(final Class nextActivityClass) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setTitle("ログイン");
         alertDialogBuilder.setMessage("匿名投稿といいね！をするには Facebook ログインが必要です");
@@ -83,7 +83,7 @@ public class BaseActivity extends Activity {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        tryLogin(context, nextActivityClass);
+                        tryLogin(MainActivity.this, nextActivityClass);
                     }
                 });
         alertDialogBuilder.setNegativeButton("キャンセル",

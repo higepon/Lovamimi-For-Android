@@ -154,7 +154,7 @@ public class MainActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_status_update) {
             if (getSessionId() == null) {
-                showLoginDialog(MainActivity.this, PostSecretActivity.class);
+                showLoginDialog(PostSecretActivity.class);
             } else {
                 Intent intent = new Intent(MainActivity.this, PostSecretActivity.class);
                 startActivity(intent);
