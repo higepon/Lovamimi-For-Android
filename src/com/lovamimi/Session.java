@@ -45,6 +45,4 @@ public class Session {
             throw new AssertionError("IO Error");
         }
     }
-
-
 }
