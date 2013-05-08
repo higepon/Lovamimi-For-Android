@@ -104,14 +104,7 @@ public class CommentActivity extends BaseActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_status_update) {
-            if (getSessionId() == null) {
-                showLoginDialog(PostCommentActivity.class);
-            } else {
-                Intent intent = new Intent(CommentActivity.this, PostCommentActivity.class);
-                startActivity(intent);
-                Secret secret = (Secret) getIntent().getExtras().get("secret");
-                intent.putExtra("sid", secret.sid);
-            }
+            loginAndNextActivity(PostCommentActivity.class);
             return true;
         }
         return false;

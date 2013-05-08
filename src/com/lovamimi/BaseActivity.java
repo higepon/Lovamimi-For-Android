@@ -75,7 +75,7 @@ public class BaseActivity extends Activity {
         });
     }
 
-    protected void showLoginDialog(final Class nextActivityClass) {
+    private void showLoginDialog(final Class nextActivityClass) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setTitle("ログイン");
         alertDialogBuilder.setMessage("匿名投稿といいね！をするには Facebook ログインが必要です");
@@ -83,7 +83,7 @@ public class BaseActivity extends Activity {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        tryLogin(MainActivity.this, nextActivityClass);
+                        tryLogin(BaseActivity.this, nextActivityClass);
                     }
                 });
         alertDialogBuilder.setNegativeButton("キャンセル",
@@ -95,5 +95,16 @@ public class BaseActivity extends Activity {
         alertDialogBuilder.setCancelable(true);
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+    }
+
+    protected void loginAndNextActivity(Class nextActivityClass) {
+        if (getSessionId() == null) {
+            showLoginDialog(PostCommentActivity.class);
+        } else {
+            Intent intent = new Intent(this, nextActivityClass);
+            startActivity(intent);
+            Secret secret = (Secret) getIntent().getExtras().get("secret");
+            intent.putExtra("sid", secret.sid);
+        }
     }
 }
