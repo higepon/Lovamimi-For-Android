@@ -2,6 +2,7 @@ package com.lovamimi;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,6 +15,7 @@ import com.mixpanel.android.mpmetrics.MixpanelAPI;
 public class BaseActivity extends Activity {
 
     private MixpanelAPI mixpanel;
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,7 @@ public class BaseActivity extends Activity {
             @Override
             protected void onPostExecute(String sessionId) {
                 super.onPostExecute(sessionId);
+                dialog.cancel();
                 setSessionId(sessionId);
                 Intent intent = new Intent(context, nextActivityClass);
                 if (getIntent().getExtras() != null) {
@@ -71,6 +74,7 @@ public class BaseActivity extends Activity {
     }
 
     private void tryLogin(final Context context, final Class nextActivityClass) {
+        dialog = ProgressDialog.show(this, "ロバ耳", "ログイン中");
         // Facebook login
         com.facebook.Session.openActiveSession(this, true, new com.facebook.Session.StatusCallback() {
             @Override
