@@ -11,12 +11,14 @@ import android.widget.Toast;
 public class PostCommentActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_post_secret);
-        Button postButton = (Button) findViewById(R.id.post_button);
+        setContentView(R.layout.activity_post_comment);
+        final Button postButton = (Button) findViewById(R.id.post_button);
         postButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 track("Post Comment");
+                postButton.setEnabled(false);
+                setProgressBarIndeterminateVisibility(Boolean.TRUE);
                 EditText secretText = (EditText) findViewById(R.id.secret_text);
                 String sid = getIntent().getExtras().getString("sid");
                 new AsyncTask<String, Void, Boolean>() {
@@ -29,6 +31,8 @@ public class PostCommentActivity extends BaseActivity {
                             startActivity(intent);
                         } else {
                             track("Failed Post Comment");
+                            postButton.setEnabled(true);
+                            setProgressBarIndeterminateVisibility(Boolean.FALSE);
                             Toast.makeText(PostCommentActivity.this, "投稿に失敗しました。時間をおいてもう一度お試し下さい。", Toast.LENGTH_LONG).show();
                         }
                     }

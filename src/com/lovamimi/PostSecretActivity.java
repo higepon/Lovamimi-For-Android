@@ -12,11 +12,13 @@ public class PostSecretActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_secret);
-        Button postButton = (Button) findViewById(R.id.post_button);
+        final Button postButton = (Button) findViewById(R.id.post_button);
         postButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 track("Post Secret");
+                postButton.setEnabled(false);
+                setProgressBarIndeterminateVisibility(Boolean.TRUE);
                 EditText secretText = (EditText) findViewById(R.id.secret_text);
                 new AsyncTask<String, Void, Boolean>() {
                     @Override
@@ -27,6 +29,8 @@ public class PostSecretActivity extends BaseActivity {
                             startActivity(intent);
                         } else {
                             track("Failed Post Secret");
+                            postButton.setEnabled(true);
+                            setProgressBarIndeterminateVisibility(Boolean.FALSE);
                             Toast.makeText(PostSecretActivity.this, "投稿に失敗しました。時間をおいてもう一度お試し下さい。", Toast.LENGTH_LONG).show();
                         }
                     }
