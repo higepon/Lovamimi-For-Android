@@ -102,12 +102,14 @@ public class BaseActivity extends Activity {
 
     protected void loginAndNextActivity(Class nextActivityClass) {
         if (getSessionId() == null) {
-            showLoginDialog(PostCommentActivity.class);
+            showLoginDialog(nextActivityClass);
         } else {
             Intent intent = new Intent(this, nextActivityClass);
             startActivity(intent);
-            Secret secret = (Secret) getIntent().getExtras().get("secret");
-            intent.putExtra("sid", secret.sid);
+            if (getIntent().getExtras() != null) {
+                Secret secret = (Secret) getIntent().getExtras().get("secret");
+                intent.putExtra("sid", secret.sid);
+            }
         }
     }
 }
