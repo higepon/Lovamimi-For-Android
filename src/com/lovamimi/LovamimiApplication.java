@@ -7,11 +7,12 @@ public class LovamimiApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        // debug
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.clear();
-        editor.commit();
+        if (Config.forceLogin) {
+            SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+            SharedPreferences.Editor editor = settings.edit();
+            editor.clear();
+            editor.commit();
+        }
     }
 
     private String sessionId = null;
