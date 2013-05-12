@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.*;
 import android.view.View.OnClickListener;
 import android.widget.*;
@@ -24,12 +25,17 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        if (getIntent().getBooleanExtra("need_refresh?", false)) {
+            Log.d("MainActivity", "refreshing");
+            getSecrets();
+        }
     }
 
     private void addSecretsToLayout(List<Secret> secrets) {
         LinearLayout mainLayout = (LinearLayout) findViewById(R.id.layout_main);
         LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
+        mainLayout.removeAllViews();
         for (Secret secret : secrets) {
             addOneSecretToLayout(mainLayout, inflater, secret);
         }
@@ -133,6 +139,7 @@ public class MainActivity extends BaseActivity {
         pullToRefreshView.setOnRefreshListener(new OnRefreshListener<ScrollView>() {
             @Override
             public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
+                Log.d("hage", "refresh called");
                 getSecrets();
             }
         });

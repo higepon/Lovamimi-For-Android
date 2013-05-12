@@ -38,14 +38,16 @@ public class JSONParser {
  
             HttpResponse httpResponse = httpClient.execute(httpPost);
             HttpEntity httpEntity = httpResponse.getEntity();
+            Log.d("json", "length=" + httpEntity.getContentLength());
+            Log.d("json", "status=" + httpResponse.getStatusLine());
             is = httpEntity.getContent();           
  
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            Log.d("error", e.toString());
         } catch (ClientProtocolException e) {
-            e.printStackTrace();
+            Log.d("error", e.toString());
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.d("error", e.toString());
         }
  
         try {

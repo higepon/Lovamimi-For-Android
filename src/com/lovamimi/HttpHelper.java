@@ -55,6 +55,7 @@ public class HttpHelper {
         ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
         params.addAll(Arrays.asList(queryParameters));
         params.add(new BasicNameValuePair("lang", "ja"));
+        params.add(new BasicNameValuePair("type", "android"));
         try {
             httpPost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
             HttpResponse response = client.execute(httpPost, httpContext);

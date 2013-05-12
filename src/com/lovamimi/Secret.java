@@ -88,7 +88,7 @@ public class Secret implements Serializable {
             return results;
         } catch (JSONException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            Log.d("getSecrets", e.toString());
         }
         return null;
     }
