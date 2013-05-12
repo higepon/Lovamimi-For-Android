@@ -27,7 +27,6 @@ public class PostCommentActivity extends BaseActivity {
                         super.onPostExecute(isPosted);
                         if (isPosted) {
                             Intent intent = new Intent(PostCommentActivity.this, MainActivity.class);
-                            intent.putExtra("need_refresh?", true);
                             startActivity(intent);
                         } else {
                             track("Failed Post Comment");

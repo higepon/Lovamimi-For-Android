@@ -25,10 +25,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if (getIntent().getBooleanExtra("need_refresh?", false)) {
-            Log.d("MainActivity", "refreshing");
-            getSecrets();
-        }
     }
 
     private void addSecretsToLayout(List<Secret> secrets) {
