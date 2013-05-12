@@ -54,6 +54,11 @@ public class BaseActivity extends Activity {
                 super.onPostExecute(sessionId);
                 setSessionId(sessionId);
                 Intent intent = new Intent(context, nextActivityClass);
+                if (getIntent().getExtras() != null) {
+                    Log.d("hage", "setting intent extra");
+                    Secret secret = (Secret) getIntent().getExtras().get("secret");
+                    intent.putExtra("sid", secret.sid);
+                }
                 startActivity(intent);
             }
 
@@ -105,11 +110,13 @@ public class BaseActivity extends Activity {
             showLoginDialog(nextActivityClass);
         } else {
             Intent intent = new Intent(this, nextActivityClass);
-            startActivity(intent);
+            Log.d("hage", "this =" + this.toString());
             if (getIntent().getExtras() != null) {
+                Log.d("hage", "setting intent extra");
                 Secret secret = (Secret) getIntent().getExtras().get("secret");
                 intent.putExtra("sid", secret.sid);
             }
+            startActivity(intent);
         }
     }
 }
