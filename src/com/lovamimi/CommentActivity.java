@@ -32,13 +32,6 @@ public class CommentActivity extends BaseActivity {
         setSecretToLayout(secret);
         LinearLayout mainLayout = (LinearLayout) findViewById(R.id.main_container);
         setCommentsToLayout(mainLayout, secret.comments);
-
-        if (getIntent().getExtras() != null) {
-            Log.d("hage", "setting get extra");
-            Log.d("hage", getIntent().toString());
-            Secret s = (Secret) getIntent().getExtras().get("secret");
-            Log.d("hage", s.toString());
-        }
     }
 
     private void setCommentsToLayout(LinearLayout mainLayout, List<Secret> comments) {

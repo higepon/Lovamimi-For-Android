@@ -98,7 +98,6 @@ public class Secret implements Serializable {
     }
 
     public boolean postCommentLike(String sessionId) {
-        Log.d("hage postCommentLike", sid + ":" + getCid());
         return HttpHelper.postLovamimi(sessionId,
                 new BasicNameValuePair("like_sid", sid),
                 new BasicNameValuePair("like_cid", getCid()));
@@ -125,7 +124,6 @@ public class Secret implements Serializable {
                 comments = new ArrayList<Secret>(commentsArray.length());
                 extractSecrets(comments, commentsArray);
             }
-            Log.d("", "secret=" + secret.getString("body"));
             Secret s = new Secret(secret.getString("sid"), secret.getString("body"), secret.getString("datetime"), secret.getString("icon"),
                     secret.getInt("num_comments"), secret.getInt("num_likes"));
             s.comments = comments;

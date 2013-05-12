@@ -135,7 +135,6 @@ public class MainActivity extends BaseActivity {
         pullToRefreshView.setOnRefreshListener(new OnRefreshListener<ScrollView>() {
             @Override
             public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
-                Log.d("hage", "refresh called");
                 getSecrets();
             }
         });

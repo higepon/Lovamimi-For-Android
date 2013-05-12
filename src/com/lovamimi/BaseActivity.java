@@ -57,11 +57,7 @@ public class BaseActivity extends Activity {
                 dialog.cancel();
                 setSessionId(sessionId);
                 Intent intent = new Intent(context, nextActivityClass);
-                if (getIntent().getExtras() != null) {
-                    Log.d("hage", "setting intent extra");
-                    Secret secret = (Secret) getIntent().getExtras().get("secret");
-                    intent.putExtra("sid", secret.sid);
-                }
+                putExtraSecret(intent);
                 startActivity(intent);
             }
 
@@ -114,13 +110,15 @@ public class BaseActivity extends Activity {
             showLoginDialog(nextActivityClass);
         } else {
             Intent intent = new Intent(this, nextActivityClass);
-            Log.d("hage", "this =" + this.toString());
-            if (getIntent().getExtras() != null) {
-                Log.d("hage", "setting intent extra");
-                Secret secret = (Secret) getIntent().getExtras().get("secret");
-                intent.putExtra("sid", secret.sid);
-            }
+            putExtraSecret(intent);
             startActivity(intent);
+        }
+    }
+
+    private void putExtraSecret(Intent intent) {
+        if (getIntent().getExtras() != null) {
+            Secret secret = (Secret) getIntent().getExtras().get("secret");
+            intent.putExtra("sid", secret.sid);
         }
     }
 }
