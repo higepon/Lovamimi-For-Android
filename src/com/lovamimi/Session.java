@@ -1,5 +1,6 @@
 package com.lovamimi;
 
+import android.util.Log;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -17,13 +18,17 @@ import java.util.List;
 
 public class Session {
 
-    public static String login(String fbSessionId) {
+    public static String login(String fbSessionId, String deviceToken) {
         HttpClient client = new DefaultHttpClient();
         HttpPost post = new HttpPost("http://lovamimi.com/ja/login.scm");
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("type", "ios"));
         params.add(new BasicNameValuePair("lang", "ja"));
         params.add(new BasicNameValuePair("token", fbSessionId));
+        Log.d("hage", "DeviceToken = " + deviceToken);
+        if (deviceToken != null) {
+            params.add(new BasicNameValuePair("android_device_token", deviceToken));
+        }
 
         try {
             post.setEntity(new UrlEncodedFormEntity(params));

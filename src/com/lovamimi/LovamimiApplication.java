@@ -33,4 +33,16 @@ public class LovamimiApplication extends Application {
         editor.commit();
         this.sessionId = sessionId;
     }
+
+    public String getDeviceToken() {
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        return settings.getString("deviceToken", null);
+    }
+
+    public void setDeviceToken(String deviceToken) {
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString("deviceToken", deviceToken);
+        editor.commit();
+    }
 }

@@ -4,11 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.*;
 import android.view.View.OnClickListener;
 import android.widget.*;
 import com.facebook.Session;
+import com.google.android.gcm.GCMRegistrar;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
@@ -139,6 +141,18 @@ public class MainActivity extends BaseActivity {
             }
         });
         track("Normal Secrets Loaded");
+
+        GCMRegistrar.checkDevice(getApplicationContext());
+        GCMRegistrar.checkManifest(getApplicationContext());
+
+        String regId = GCMRegistrar.getRegistrationId(getApplicationContext());
+        if(TextUtils.isEmpty(regId)) {
+            GCMRegistrar.register(getApplicationContext(), "372350520876");
+        } else {
+            LovamimiApplication app = (LovamimiApplication)getApplication();
+            app.setDeviceToken(regId);
+            Log.i("hoge", "already registerred");
+        }
         getSecrets();
         setProgressBarIndeterminateVisibility(Boolean.TRUE);
     }

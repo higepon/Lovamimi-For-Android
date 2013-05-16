@@ -64,7 +64,9 @@ public class BaseActivity extends Activity {
             @Override
             protected String doInBackground(String... strings) {
                 String fbSessionId = strings[0];
-                return com.lovamimi.Session.login(fbSessionId);
+                LovamimiApplication app = (LovamimiApplication)getApplication();
+                String deviceToken = app.getDeviceToken();
+                return com.lovamimi.Session.login(fbSessionId, deviceToken);
             }
         }.execute(fbSessionId);
     }
@@ -75,7 +77,9 @@ public class BaseActivity extends Activity {
         com.facebook.Session.openActiveSession(this, true, new com.facebook.Session.StatusCallback() {
             @Override
             public void call(com.facebook.Session session, SessionState state, Exception exception) {
-                lovamimiLogin(context, nextActivityClass, session.getAccessToken());
+                if (session.isOpened()) {
+                    lovamimiLogin(context, nextActivityClass, session.getAccessToken());
+                }
             }
         });
     }
