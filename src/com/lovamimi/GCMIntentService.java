@@ -20,12 +20,12 @@ public class GCMIntentService extends GCMBaseIntentService {
     }
 
     @Override
-    protected void onMessage(Context arg0, Intent arg1) {
+    protected void onMessage(Context context, Intent intent) {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.drawable.lovamimi_logo)
                         .setContentTitle("ロバ耳")
-                        .setContentText(arg1.getStringExtra("message"));
+                        .setContentText(intent.getStringExtra("message"));
 // Creates an explicit intent for an Activity in your app
         Intent resultIntent = new Intent(this, MainActivity.class);
 
