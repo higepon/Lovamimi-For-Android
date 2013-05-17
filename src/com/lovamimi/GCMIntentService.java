@@ -41,7 +41,6 @@ public class GCMIntentService extends GCMBaseIntentService {
 
     @Override
     protected void onRegistered(Context arg0, String arg1) {
-        // TODO Auto-generated method stub
         LovamimiApplication app = (LovamimiApplication)getApplication();
         app.setDeviceToken(arg1);
         Log.i(TAG, "onRegistered : " + arg1 );
@@ -49,7 +48,6 @@ public class GCMIntentService extends GCMBaseIntentService {
 
     @Override
     protected void onUnregistered(Context arg0, String arg1) {
-        // TODO Auto-generated method stub
         Log.i(TAG, "onUnregistered : " + arg1 );
     }
 }
