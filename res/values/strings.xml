@@ -8,5 +8,8 @@
     <string name="title_activity_comment">CommentActivity</string>
     <string name="heart_plus">Heart Plus</string>
     <string name="app_id">131635960238479</string>
+    <string name="post_comment_anonymously">匿名でコメント</string>
+    <string name="no_one_can_know_who_post">匿名コメント。誰が書いたかは誰にも知られません。性的に過激な書き込みはお控え下さい。</string>
+    <string name="post_anonymously">匿名で投稿</string>
 
 </resources>
