@@ -21,16 +21,6 @@ public class GCMIntentService extends GCMBaseIntentService {
 
     @Override
     protected void onMessage(Context arg0, Intent arg1) {
-        // TODO Auto-generated method stub
-/*
-        String str = arg1.getStringExtra("message");
-        NotificationManager notim = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-        Notification notif = new Notification(R.drawable.ic_launcher, str, System.currentTimeMillis());
-        Intent inte = new Intent();
-        PendingIntent cont = PendingIntent.getActivity(this, 0, inte, 0);
-        notif.setLatestEventInfo(getApplicationContext(), str, TAG, cont);
-        notim.notify(R.string.app_name, notif);
-*/
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.drawable.lovamimi_logo)
