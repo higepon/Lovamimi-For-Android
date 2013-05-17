@@ -21,18 +21,14 @@ public class GCMIntentService extends GCMBaseIntentService {
 
     @Override
     protected void onMessage(Context context, Intent intent) {
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.lovamimi_logo)
-                        .setContentTitle("ロバ耳")
-                        .setContentText(intent.getStringExtra("message"));
-// Creates an explicit intent for an Activity in your app
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.lovamimi_logo)
+                .setContentTitle("ロバ耳")
+                .setContentText(intent.getStringExtra("message"));
+
         Intent resultIntent = new Intent(this, MainActivity.class);
 
-// The stack builder object will contain an artificial back stack for the
-// started Activity.
-// This ensures that navigating backward from the Activity leads out of
-// your application to the Home screen.
+        // To make sure that the back button navigates to home screen
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
 // Adds the back stack for the Intent (but not the Intent itself)
         stackBuilder.addParentStack(MainActivity.class);
