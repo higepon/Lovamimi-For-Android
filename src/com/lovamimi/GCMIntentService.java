@@ -15,8 +15,8 @@ public class GCMIntentService extends GCMBaseIntentService {
     private static final String TAG = "GCMIntentService";
 
     @Override
-    protected void onError(Context arg0, String arg1) {
-        Log.e(TAG, "onError : " + arg1 );
+    protected void onError(Context context, String s) {
+        Log.e(TAG, "onError : " + s );
     }
 
     @Override
@@ -40,14 +40,14 @@ public class GCMIntentService extends GCMBaseIntentService {
     }
 
     @Override
-    protected void onRegistered(Context arg0, String arg1) {
+    protected void onRegistered(Context context, String s) {
         LovamimiApplication app = (LovamimiApplication)getApplication();
-        app.setDeviceToken(arg1);
-        Log.i(TAG, "onRegistered : " + arg1 );
+        app.setDeviceToken(s);
+        Log.i(TAG, "onRegistered : " + s);
     }
 
     @Override
-    protected void onUnregistered(Context arg0, String arg1) {
-        Log.i(TAG, "onUnregistered : " + arg1 );
+    protected void onUnregistered(Context context, String s) {
+        Log.i(TAG, "onUnregistered : " + s );
     }
 }
