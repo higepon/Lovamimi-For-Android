@@ -25,7 +25,6 @@ public class Session {
         params.add(new BasicNameValuePair("type", "ios"));
         params.add(new BasicNameValuePair("lang", "ja"));
         params.add(new BasicNameValuePair("token", fbSessionId));
-        Log.d("hage", "DeviceToken = " + deviceToken);
         if (deviceToken != null) {
             params.add(new BasicNameValuePair("android_device_token", deviceToken));
         }
