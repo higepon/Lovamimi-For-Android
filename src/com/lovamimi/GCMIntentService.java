@@ -16,8 +16,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 
     @Override
     protected void onError(Context arg0, String arg1) {
-        // TODO Auto-generated method stub
-        Log.i(TAG, "onError : " + arg1 );
+        Log.e(TAG, "onError : " + arg1 );
     }
 
     @Override
