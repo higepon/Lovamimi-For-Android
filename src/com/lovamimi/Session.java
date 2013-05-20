@@ -1,5 +1,6 @@
 package com.lovamimi;
 
+import android.util.Log;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -44,6 +45,36 @@ public class Session {
                 return result;
             }
             return "";
+        } catch (IOException e) {
+            throw new AssertionError("IO Error");
+        }
+    }
+
+    public static boolean isExpired(String sessionId) {
+        Log.d("isExpired session=", sessionId);
+        HttpClient client = new DefaultHttpClient();
+        HttpPost post = new HttpPost("http://lovamimi.com/ja/login.scm");
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("type", "sync_login"));
+        params.add(new BasicNameValuePair("session_id", HttpHelper.chop(sessionId)));
+        params.add(new BasicNameValuePair("lang", "ja"));
+        try {
+            post.setEntity(new UrlEncodedFormEntity(params));
+        } catch (UnsupportedEncodingException e) {
+            throw new AssertionError("Encoding Error");
+        }
+
+        try {
+            HttpResponse response = client.execute(post);
+            HttpEntity entity = response.getEntity();
+            if (entity != null) {
+                InputStream in = entity.getContent();
+                String result = HttpHelper.streamToString(in);
+                in.close();
+                result = HttpHelper.chop(result);
+                return !result.equals("in");
+            }
+            return false;
         } catch (IOException e) {
             throw new AssertionError("IO Error");
         }

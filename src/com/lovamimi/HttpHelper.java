@@ -26,7 +26,7 @@ import java.util.Date;
 public class HttpHelper {
     private static final String TAG = "HttpHelper";
 
-    private static String chop(String s) {
+    public static String chop(String s) {
         if (s.isEmpty()) {
             return s;
         } else {

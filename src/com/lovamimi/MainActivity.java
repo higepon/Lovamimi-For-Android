@@ -102,6 +102,31 @@ public class MainActivity extends BaseActivity {
         mainLayout.addView(incLayout);
     }
 
+    private void syncLoginStatus() {
+        // todo move to session class?
+        AsyncTask<Void, Void, Void> fetchTimeline = new AsyncTask<Void, Void, Void>() {
+
+            @Override
+            protected void onPostExecute(Void notUsed) {
+                super.onPostExecute(notUsed);
+            }
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected Void doInBackground(Void ... args) {
+                LovamimiApplication app = (LovamimiApplication) getApplication();
+                app.syncSession();
+                return null;
+            }
+        };
+        fetchTimeline.execute();
+    }
+
+
     private void getSecrets() {
         AsyncTask<Void, Void, List<Secret>> fetchTimeline = new AsyncTask<Void, Void, List<Secret>>() {
 
@@ -137,22 +162,28 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
                 getSecrets();
+                syncLoginStatus();
             }
         });
         track("Normal Secrets Loaded");
 
-        GCMRegistrar.checkDevice(getApplicationContext());
-        GCMRegistrar.checkManifest(getApplicationContext());
+        try {
+            GCMRegistrar.checkDevice(getApplicationContext());
+            GCMRegistrar.checkManifest(getApplicationContext());
 
-        String regId = GCMRegistrar.getRegistrationId(getApplicationContext());
-        if (TextUtils.isEmpty(regId)) {
-            GCMRegistrar.register(getApplicationContext(), "372350520876");
-        } else {
-            LovamimiApplication app = (LovamimiApplication) getApplication();
-            app.setDeviceToken(regId);
-            i("already registered");
+            String regId = GCMRegistrar.getRegistrationId(getApplicationContext());
+            if (TextUtils.isEmpty(regId)) {
+                GCMRegistrar.register(getApplicationContext(), "372350520876");
+            } else {
+                LovamimiApplication app = (LovamimiApplication) getApplication();
+                app.setDeviceToken(regId);
+                i("already registered");
+            }
+        } catch (Exception e) {
+            e("GCM error: " + e.toString());
         }
         getSecrets();
+        syncLoginStatus();
         setProgressBarIndeterminateVisibility(Boolean.TRUE);
     }
 
