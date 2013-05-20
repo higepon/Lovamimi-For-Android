@@ -103,7 +103,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void getSecrets() {
-        AsyncTask<String, Void, List<Secret>> fetchTimeline = new AsyncTask<String, Void, List<Secret>>() {
+        AsyncTask<Void, Void, List<Secret>> fetchTimeline = new AsyncTask<Void, Void, List<Secret>>() {
 
             @Override
             protected void onPostExecute(List<Secret> secrets) {
@@ -120,11 +120,11 @@ public class MainActivity extends BaseActivity {
             }
 
             @Override
-            protected List<Secret> doInBackground(String... args) {
+            protected List<Secret> doInBackground(Void ... args) {
                 return Secret.getSecrets();
             }
         };
-        fetchTimeline.execute("test");
+        fetchTimeline.execute();
     }
 
     @Override
