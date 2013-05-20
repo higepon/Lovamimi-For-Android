@@ -1,6 +1,5 @@
 package com.lovamimi;
 
-import android.util.Log;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
