@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.*;
 import android.view.View.OnClickListener;
 import android.widget.*;
@@ -146,12 +145,12 @@ public class MainActivity extends BaseActivity {
         GCMRegistrar.checkManifest(getApplicationContext());
 
         String regId = GCMRegistrar.getRegistrationId(getApplicationContext());
-        if(TextUtils.isEmpty(regId)) {
+        if (TextUtils.isEmpty(regId)) {
             GCMRegistrar.register(getApplicationContext(), "372350520876");
         } else {
-            LovamimiApplication app = (LovamimiApplication)getApplication();
+            LovamimiApplication app = (LovamimiApplication) getApplication();
             app.setDeviceToken(regId);
-            Log.i("hoge", "already registerred");
+            i("already registered");
         }
         getSecrets();
         setProgressBarIndeterminateVisibility(Boolean.TRUE);

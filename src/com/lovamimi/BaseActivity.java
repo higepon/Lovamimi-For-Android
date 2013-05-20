@@ -27,8 +27,12 @@ public class BaseActivity extends Activity {
         mixpanel.track("Android:" + eventName, null);
     }
 
-    protected void error(String s) {
+    protected void e(String s) {
         Log.e(this.getClass().toString(), s);
+    }
+
+    protected void i(String s) {
+        Log.i(this.getClass().toString(), s);
     }
 
     @Override
