@@ -1,0 +1,2 @@
+include ':libs:library'
+include ':libs:facebook-android-sdk-3.6.0:facebook'
