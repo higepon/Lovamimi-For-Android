@@ -3,11 +3,13 @@ package com.lovamimi;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.util.Log;
+import com.deploygate.sdk.DeployGate;
 
 public class LovamimiApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        DeployGate.install(this, null, true);
         if (Config.forceLogin) {
             clearSession();
         }

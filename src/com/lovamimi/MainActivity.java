@@ -8,7 +8,7 @@ import android.text.TextUtils;
 import android.view.*;
 import android.view.View.OnClickListener;
 import android.widget.*;
-import com.facebook.Session;
+//import com.facebook.Session;
 import com.google.android.gcm.GCMRegistrar;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
@@ -20,7 +20,9 @@ public class MainActivity extends BaseActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        /*
         Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
+        */
     }
 
     @Override

@@ -76,6 +76,7 @@ public class BaseActivity extends Activity {
     }
 
     private void tryLogin(final Context context, final Class nextActivityClass) {
+    	/*
         dialog = ProgressDialog.show(this, "ロバ耳", "ログイン中");
         // Facebook login
         com.facebook.Session.openActiveSession(this, true, new com.facebook.Session.StatusCallback() {
@@ -86,6 +87,7 @@ public class BaseActivity extends Activity {
                 }
             }
         });
+       */
     }
 
     private void showLoginDialog(final Class nextActivityClass) {
