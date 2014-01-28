@@ -9,7 +9,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import com.facebook.SessionState;
+//import com.facebook.SessionState;
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
 public class BaseActivity extends Activity {
