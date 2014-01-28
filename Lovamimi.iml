@@ -69,8 +69,10 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 18 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" exported="" name="support-v4-13.0.0" level="project" />
     <orderEntry type="library" exported="" name="deploygatesdk" level="project" />
     <orderEntry type="library" exported="" name="MixpanelAPI" level="project" />
+    <orderEntry type="module" module-name="facebook" exported="" />
     <orderEntry type="library" exported="" name="gcm" level="project" />
     <orderEntry type="module" module-name="library" exported="" />
   </component>

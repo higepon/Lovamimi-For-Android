@@ -9,7 +9,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-//import com.facebook.SessionState;
+
+import com.facebook.SessionState;
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
 public class BaseActivity extends Activity {
@@ -76,7 +77,6 @@ public class BaseActivity extends Activity {
     }
 
     private void tryLogin(final Context context, final Class nextActivityClass) {
-    	/*
         dialog = ProgressDialog.show(this, "ロバ耳", "ログイン中");
         // Facebook login
         com.facebook.Session.openActiveSession(this, true, new com.facebook.Session.StatusCallback() {
@@ -87,7 +87,6 @@ public class BaseActivity extends Activity {
                 }
             }
         });
-       */
     }
 
     private void showLoginDialog(final Class nextActivityClass) {
