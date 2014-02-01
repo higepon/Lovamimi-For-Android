@@ -19,12 +19,22 @@ public class GCMIntentService extends GCMBaseIntentService {
 
     @Override
     protected void onMessage(Context context, Intent intent) {
-        Notification.Builder builder = new Notification.Builder(this)
-                .setSmallIcon(R.drawable.lovamimi_logo)
-                .setContentTitle("ロバ耳")
-                .setContentText(intent.getStringExtra("message"));
 
         Intent resultIntent = new Intent(this, MainActivity.class);
+
+        String sid = intent.getStringExtra("sid");
+        Secret secret = null;
+        if (sid != null) {
+            secret = (new SecretsCache(context)).getSecret(sid);
+        }
+
+        String message = intent.getStringExtra("message");
+        String title = "ロバ耳 - " + message;
+
+        Notification.Builder builder = new Notification.Builder(this)
+                .setSmallIcon(R.drawable.lovamimi_logo)
+                .setContentTitle(title)
+                .setContentText(secret.body);
 
         // To make sure that the back button navigates to home screen
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);

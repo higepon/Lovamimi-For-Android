@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.*;
 import android.view.View.OnClickListener;
 import android.widget.*;
@@ -133,6 +134,13 @@ public class MainActivity extends BaseActivity {
             @Override
             protected void onPostExecute(List<Secret> secrets) {
                 super.onPostExecute(secrets);
+                SecretsCache secretsCache = new SecretsCache(MainActivity.this);
+                for (Secret secret : secrets) {
+                    secretsCache.insertSecret(secret);
+                }
+                secretsCache.debug();
+                Log.d("MOGO", secretsCache.getSecret(secrets.get(0).sid).body);
+
                 addSecretsToLayout(secrets);
                 PullToRefreshScrollView pullToRefreshView = (PullToRefreshScrollView) findViewById(R.id.scroll);
                 pullToRefreshView.onRefreshComplete();
