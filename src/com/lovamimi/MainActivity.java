@@ -138,9 +138,6 @@ public class MainActivity extends BaseActivity {
                 for (Secret secret : secrets) {
                     secretsCache.insertSecret(secret);
                 }
-                secretsCache.debug();
-                Log.d("MOGO", secretsCache.getSecret(secrets.get(0).sid).body);
-
                 addSecretsToLayout(secrets);
                 PullToRefreshScrollView pullToRefreshView = (PullToRefreshScrollView) findViewById(R.id.scroll);
                 pullToRefreshView.onRefreshComplete();
@@ -155,6 +152,30 @@ public class MainActivity extends BaseActivity {
             @Override
             protected List<Secret> doInBackground(Void ... args) {
                 return Secret.getSecrets();
+            }
+        };
+        fetchTimeline.execute();
+    }
+
+    private void getCachedSecrets() {
+        AsyncTask<Void, Void, List<Secret>> fetchTimeline = new AsyncTask<Void, Void, List<Secret>>() {
+
+            @Override
+            protected void onPostExecute(List<Secret> secrets) {
+                super.onPostExecute(secrets);
+                addSecretsToLayout(secrets);
+                PullToRefreshScrollView pullToRefreshView = (PullToRefreshScrollView) findViewById(R.id.scroll);
+                pullToRefreshView.onRefreshComplete();
+            }
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected List<Secret> doInBackground(Void ... args) {
+                return (new SecretsCache(MainActivity.this).getAllSecrets());
             }
         };
         fetchTimeline.execute();
@@ -190,6 +211,7 @@ public class MainActivity extends BaseActivity {
         } catch (Exception e) {
             e("GCM error: " + e.toString());
         }
+        getCachedSecrets();
         getSecrets();
         syncLoginStatus();
         setProgressBarIndeterminateVisibility(Boolean.TRUE);
